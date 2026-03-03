@@ -6,9 +6,7 @@
 <title>ChatGPTAI Extension - nopCommerce Plugin</title>
 </head>
 <body style="margin:0;padding:20px;background:#fff;">
-
 <div id="ct-plugin-desc" style="max-width:940px;margin:0 auto;padding:0;font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:1.7;color:#444;">
-
 <style>
 #ct-plugin-desc .ct-provs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 #ct-plugin-desc .ct-svc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -17,114 +15,48 @@
 #ct-plugin-desc .ct-screen-row,
 #ct-plugin-desc .ct-screen-row-rev{display:flex;gap:24px;align-items:center}
 #ct-plugin-desc .ct-screen-row-rev{flex-direction:row-reverse}
-
 @media(max-width:768px){
-    #ct-plugin-desc{font-size:13px !important}
-    #ct-plugin-desc h2{font-size:18px !important}
-    #ct-plugin-desc h3{font-size:16px !important}
-    #ct-plugin-desc .ct-provs{grid-template-columns:repeat(3,1fr) !important}
-    #ct-plugin-desc .ct-svc-row{grid-template-columns:1fr 1fr !important}
-    #ct-plugin-desc .ct-features{grid-template-columns:1fr !important}
-    #ct-plugin-desc .ct-popup{flex-direction:column !important}
-    #ct-plugin-desc .ct-footer-top{flex-direction:column !important;text-align:center !important;gap:16px !important}
-    #ct-plugin-desc .ct-contact-cards{grid-template-columns:1fr !important}
-    #ct-plugin-desc .ct-screen-row,
-    #ct-plugin-desc .ct-screen-row-rev{flex-direction:column !important}
-    #ct-plugin-desc .ct-screen-text{flex:1 1 100% !important;min-width:0 !important}
-    #ct-plugin-desc .ct-screen-img{flex:1 1 100% !important;min-width:0 !important}
-    #ct-plugin-desc .ct-footer-badges{justify-content:center !important;flex-wrap:wrap !important}
+#ct-plugin-desc{font-size:13px !important}
+#ct-plugin-desc h2{font-size:18px !important}
+#ct-plugin-desc h3{font-size:16px !important}
+#ct-plugin-desc .ct-provs{grid-template-columns:repeat(3,1fr) !important}
+#ct-plugin-desc .ct-svc-row{grid-template-columns:1fr 1fr !important}
+#ct-plugin-desc .ct-features{grid-template-columns:1fr !important}
+#ct-plugin-desc .ct-popup{flex-direction:column !important}
+#ct-plugin-desc .ct-footer-top{flex-direction:column !important;text-align:center !important;gap:16px !important}
+#ct-plugin-desc .ct-contact-cards{grid-template-columns:1fr !important}
+#ct-plugin-desc .ct-screen-row,
+#ct-plugin-desc .ct-screen-row-rev{flex-direction:column !important}
+#ct-plugin-desc .ct-screen-text{flex:1 1 100% !important;min-width:0 !important}
+#ct-plugin-desc .ct-screen-img{flex:1 1 100% !important;min-width:0 !important}
+#ct-plugin-desc .ct-footer-badges{justify-content:center !important;flex-wrap:wrap !important}
 }
 @media(max-width:480px){
-    #ct-plugin-desc{font-size:12.5px !important}
-    #ct-plugin-desc h2{font-size:16px !important}
-    #ct-plugin-desc h3{font-size:14.5px !important}
-    #ct-plugin-desc .ct-provs{grid-template-columns:1fr 1fr !important}
-    #ct-plugin-desc .ct-svc-row{grid-template-columns:1fr !important}
-    #ct-plugin-desc .ct-btn-row{flex-direction:column !important;align-items:stretch !important}
-    #ct-plugin-desc .ct-btn-row a{text-align:center !important}
+#ct-plugin-desc{font-size:12.5px !important}
+#ct-plugin-desc h2{font-size:16px !important}
+#ct-plugin-desc h3{font-size:14.5px !important}
+#ct-plugin-desc .ct-provs{grid-template-columns:1fr 1fr !important}
+#ct-plugin-desc .ct-svc-row{grid-template-columns:1fr !important}
+#ct-plugin-desc .ct-btn-row{flex-direction:column !important;align-items:stretch !important}
+#ct-plugin-desc .ct-btn-row a{text-align:center !important}
 }
 </style>
-
-<!-- TOP BUTTONS -->
 <div class="ct-btn-row" style="display:flex;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;">
-    <a href="/chatgptaiextension-plugin" style="display:inline-block;background:#fb6060;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">GET IT NOW</a>
-    <a href="/chatgptaiextension-plugin-documentation" style="display:inline-block;background:#2c2c3e;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">DOCUMENTATION</a>
+<a href="/chatgptaiextension-plugin" style="display:inline-block;background:#fb6060;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">GET IT NOW</a>
+<a href="/chatgptaiextension-plugin-documentation" style="display:inline-block;background:#2c2c3e;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">DOCUMENTATION</a>
 </div>
-
-<!-- DESCRIPTION -->
-<p style="margin-bottom:14px;">The <strong>ChatGPTAIExtension Plugin for nopCommerce</strong> is a powerful AI-driven content generation solution supporting <strong>5 AI models</strong> — Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AI option AnythingLLM. It automatically creates SEO-friendly descriptions for Products, Blog posts, News Items, and Topic pages. The plugin also generates Meta Title, Meta Keywords, and Meta Description based on configuration settings.</p>
-
+<p style="margin-bottom:14px;">The <strong>ChatGPTAIExtension Plugin for nopCommerce</strong> is a powerful AI-driven content generation solution supporting <strong>5 AI models</strong> &#8212; Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AI option AnythingLLM. It automatically creates SEO-friendly descriptions for Products, Blog posts, News Items, and Topic pages. The plugin also generates Meta Title, Meta Keywords, and Meta Description based on configuration settings.</p>
 <p style="margin-bottom:14px;">Designed to save time and reduce manual effort, it ensures consistent and professional content across your website. With one-click functionality and secure API integration, it helps improve search engine visibility and overall store performance.</p>
-
 <p style="margin-bottom:28px;">Whether you manage a small store or a large-scale eCommerce platform, this plugin simplifies content creation, improves productivity, and enhances overall store performance across <strong>nopCommerce 4.6, 4.7, 4.8, and 4.9</strong>.</p>
-
-<!-- BANNER IMAGE -->
 <div style="text-align:center;margin-bottom:28px;">
-    <img src="plugin-disciption-banner-chatgptai.jpg" alt="ChatGPTAI Extension Plugin for nopCommerce" loading="lazy" style="max-width:100%;border-radius:6px;border:1px solid #e2e4ec;" />
+<img src="plugin-disciption-banner-chatgptai.jpg" alt="ChatGPTAI Extension Plugin for nopCommerce" loading="lazy" style="max-width:100%;border-radius:6px;border:1px solid #e2e4ec;" />
 </div>
-
-<!-- AI PROVIDERS -->
 <h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Supported AI Providers</h2>
 <div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
-
 <div class="ct-provs" style="margin-bottom:28px;">
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftazure.svg" alt="Azure" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
-        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">Azure OpenAI</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg" alt="ChatGPT" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
-        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">ChatGPT</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" alt="Gemini" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
-        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">Gemini</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-        <svg viewBox="0 0 24 24" width="28" height="28" style="margin-bottom:6px;opacity:.8;"><path fill="#0A6AFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5v-2.09c-1.71-.26-3.15-1.24-3.87-2.66l1.71-.71c.51 1.01 1.52 1.71 2.66 1.71 1.81 0 2.75-1.54 2.75-2.75S13.31 8.25 11.5 8.25c-1.24 0-2.31.78-2.75 1.88l-1.71-.71C7.76 7.83 9.5 6.75 11.5 6.75c2.62 0 4.25 1.88 4.25 4s-1.63 4.25-4.25 4.25H11v2.5h-1z"/></svg>
-        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">DeepSeek</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-        <svg viewBox="0 0 24 24" width="28" height="28" style="margin-bottom:6px;opacity:.8;"><path fill="#333" d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
-        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">AnythingLLM</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Free</span>
-    </div>
+<div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftazure.svg" alt="Azure" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
+<strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">Azure OpenAI</strong>
+<span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
 </div>
-
-<!-- SUPPORTED NOPCOMMERCE VERSIONS -->
-<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Supported nopCommerce Versions</h2>
-<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
-
-<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;">
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
-        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.60</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
-        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.70</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
-        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.80</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
-        <strong style="display:block;font-size:22px;color:#fb6060;margin-bottom:2px;">4.90</strong>
-        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#fff3e0;color:#e67e22;">Latest</span>
-    </div>
-</div>
-
-<!-- CONFIGURATION -->
-<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Configuration</h2>
-<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
-
-<p style="margin-bottom:14px;">After installing the plugin, navigate to <strong>Configuration → ChatGPTAI Extension</strong> in your nopCommerce admin panel. The configuration page lets you set up everything in one place — enable AI services, select your preferred AI provider, enter your API key, toggle content sections (Products, Blog, News, Topics, Meta Tags), and customize the default AI prompts for each content type.</p>
-
-<p style="margin-bottom:16px;">Once configured, the <strong>"Generate Using AI"</strong> button appears on the relevant editor pages throughout your admin panel. Simply click it, customize your query in the popup, and let AI generate professional, SEO-optimized content instantly.</p>
-
-<div style="text-align:center;margin-bottom:28px;">
-    <img src="configure_chatgptaiextension.png" alt="ChatGPTAI Extension Configuration Page" loading="lazy" style="max-width:100%;border-radius:6px;border:1px solid #e2e4e...
+<div style="background:#fff;border:1px solid #e2e4e...
