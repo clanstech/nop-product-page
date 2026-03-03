@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPTAI Extension - nopCommerce Plugin</title>
+</head>
+<body style="margin:0;padding:20px;background:#fff;">
+
+<div id="ct-plugin-desc" style="max-width:940px;margin:0 auto;padding:0;font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:1.7;color:#444;">
+
+<style>
+#ct-plugin-desc .ct-provs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+#ct-plugin-desc .ct-svc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#ct-plugin-desc .ct-contact-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+#ct-plugin-desc .ct-features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#ct-plugin-desc .ct-screen-row,
+#ct-plugin-desc .ct-screen-row-rev{display:flex;gap:24px;align-items:center}
+#ct-plugin-desc .ct-screen-row-rev{flex-direction:row-reverse}
+
+@media(max-width:768px){
+    #ct-plugin-desc{font-size:13px !important}
+    #ct-plugin-desc h2{font-size:18px !important}
+    #ct-plugin-desc h3{font-size:16px !important}
+    #ct-plugin-desc .ct-provs{grid-template-columns:repeat(3,1fr) !important}
+    #ct-plugin-desc .ct-svc-row{grid-template-columns:1fr 1fr !important}
+    #ct-plugin-desc .ct-features{grid-template-columns:1fr !important}
+    #ct-plugin-desc .ct-popup{flex-direction:column !important}
+    #ct-plugin-desc .ct-footer-top{flex-direction:column !important;text-align:center !important;gap:16px !important}
+    #ct-plugin-desc .ct-contact-cards{grid-template-columns:1fr !important}
+    #ct-plugin-desc .ct-screen-row,
+    #ct-plugin-desc .ct-screen-row-rev{flex-direction:column !important}
+    #ct-plugin-desc .ct-screen-text{flex:1 1 100% !important;min-width:0 !important}
+    #ct-plugin-desc .ct-screen-img{flex:1 1 100% !important;min-width:0 !important}
+    #ct-plugin-desc .ct-footer-badges{justify-content:center !important;flex-wrap:wrap !important}
+}
+@media(max-width:480px){
+    #ct-plugin-desc{font-size:12.5px !important}
+    #ct-plugin-desc h2{font-size:16px !important}
+    #ct-plugin-desc h3{font-size:14.5px !important}
+    #ct-plugin-desc .ct-provs{grid-template-columns:1fr 1fr !important}
+    #ct-plugin-desc .ct-svc-row{grid-template-columns:1fr !important}
+    #ct-plugin-desc .ct-btn-row{flex-direction:column !important;align-items:stretch !important}
+    #ct-plugin-desc .ct-btn-row a{text-align:center !important}
+}
+</style>
+
+<!-- TOP BUTTONS -->
+<div class="ct-btn-row" style="display:flex;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;">
+    <a href="/chatgptaiextension-plugin" style="display:inline-block;background:#fb6060;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">GET IT NOW</a>
+    <a href="/chatgptaiextension-plugin-documentation" style="display:inline-block;background:#2c2c3e;color:#fff;padding:10px 30px;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;border-radius:4px;letter-spacing:.5px;">DOCUMENTATION</a>
+</div>
+
+<!-- DESCRIPTION -->
+<p style="margin-bottom:14px;">The <strong>ChatGPTAIExtension Plugin for nopCommerce</strong> is a powerful AI-driven content generation solution supporting <strong>5 AI models</strong> — Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AI option AnythingLLM. It automatically creates SEO-friendly descriptions for Products, Blog posts, News Items, and Topic pages. The plugin also generates Meta Title, Meta Keywords, and Meta Description based on configuration settings.</p>
+
+<p style="margin-bottom:14px;">Designed to save time and reduce manual effort, it ensures consistent and professional content across your website. With one-click functionality and secure API integration, it helps improve search engine visibility and overall store performance.</p>
+
+<p style="margin-bottom:28px;">Whether you manage a small store or a large-scale eCommerce platform, this plugin simplifies content creation, improves productivity, and enhances overall store performance across <strong>nopCommerce 4.6, 4.7, 4.8, and 4.9</strong>.</p>
+
+<!-- BANNER IMAGE -->
+<div style="text-align:center;margin-bottom:28px;">
+    <img src="plugin-disciption-banner-chatgptai.jpg" alt="ChatGPTAI Extension Plugin for nopCommerce" loading="lazy" style="max-width:100%;border-radius:6px;border:1px solid #e2e4ec;" />
+</div>
+
+<!-- AI PROVIDERS -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Supported AI Providers</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<div class="ct-provs" style="margin-bottom:28px;">
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftazure.svg" alt="Azure" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">Azure OpenAI</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg" alt="ChatGPT" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">ChatGPT</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" alt="Gemini" style="width:28px;height:28px;margin-bottom:6px;opacity:.8;" />
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">Gemini</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <svg viewBox="0 0 24 24" width="28" height="28" style="margin-bottom:6px;opacity:.8;"><path fill="#0A6AFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5v-2.09c-1.71-.26-3.15-1.24-3.87-2.66l1.71-.71c.51 1.01 1.52 1.71 2.66 1.71 1.81 0 2.75-1.54 2.75-2.75S13.31 8.25 11.5 8.25c-1.24 0-2.31.78-2.75 1.88l-1.71-.71C7.76 7.83 9.5 6.75 11.5 6.75c2.62 0 4.25 1.88 4.25 4s-1.63 4.25-4.25 4.25H11v2.5h-1z"/></svg>
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">DeepSeek</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e67e22;">Paid</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:18px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+        <svg viewBox="0 0 24 24" width="28" height="28" style="margin-bottom:6px;opacity:.8;"><path fill="#333" d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:4px;">AnythingLLM</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Free</span>
+    </div>
+</div>
+
+<!-- SUPPORTED NOPCOMMERCE VERSIONS -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Supported nopCommerce Versions</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;">
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
+        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.60</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
+        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.70</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4ec;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
+        <strong style="display:block;font-size:22px;color:#2c2c3e;margin-bottom:2px;">4.80</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#e8f5e9;color:#27ae60;">Supported</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e4e8;border-radius:8px;padding:14px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);min-width:100px;">
+        <strong style="display:block;font-size:22px;color:#fb6060;margin-bottom:2px;">4.90</strong>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 10px;border-radius:4px;background:#fff3e0;color:#e67e22;">Latest</span>
+    </div>
+</div>
+
+<!-- CONFIGURATION -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Configuration</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<p style="margin-bottom:14px;">After installing the plugin, navigate to <strong>Configuration → ChatGPTAI Extension</strong> in your nopCommerce admin panel. The configuration page lets you set up everything in one place — enable AI services, select your preferred AI provider, enter your API key, toggle content sections (Products, Blog, News, Topics, Meta Tags), and customize the default AI prompts for each content type.</p>
+
+<p style="margin-bottom:16px;">Once configured, the <strong>"Generate Using AI"</strong> button appears on the relevant editor pages throughout your admin panel. Simply click it, customize your query in the popup, and let AI generate professional, SEO-optimized content instantly.</p>
+
+<div style="text-align:center;margin-bottom:28px;">
+    <img src="configure_chatgptaiextension.png" alt="ChatGPTAI Extension Configuration Page" loading="lazy" style="max-width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+</div>
+
+<!-- CUSTOMIZE POPUP -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Customize AI Query Popup</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<div class="ct-popup" style="display:flex;gap:24px;margin-bottom:28px;align-items:center;flex-wrap:wrap;">
+    <div style="flex:1 1 340px;min-width:0;">
+        <img src="customize_window.png" alt="Customize AI Query Popup" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 12px rgba(0,0,0,.06);" />
+    </div>
+    <div style="flex:1 1 280px;min-width:0;">
+        <p style="margin-bottom:10px;">When you click <strong>"Generate Using AI"</strong>, a popup opens where you can customize:</p>
+        <div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#2c2c3e;">— Name (auto-filled, editable)</div>
+        <div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#2c2c3e;">— Language Selection</div>
+        <div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#2c2c3e;">— Key Features &amp; Keywords</div>
+        <div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#2c2c3e;">— Word Limit</div>
+        <div style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#2c2c3e;">— Tone of Voice / Custom Tone</div>
+        <div style="padding:6px 0;font-size:13px;color:#2c2c3e;">— Special Instructions</div>
+        <p style="margin-top:10px;font-size:12px;color:#777;">All values combine with the configured prompt and are sent to the selected AI provider. Content is generated in the selected language.</p>
+    </div>
+</div>
+
+<!-- WORKS ACROSS YOUR STORE -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Works Across Your Store</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<!-- 1. Product Description -->
+<div class="ct-screen-row" style="margin-bottom:24px;padding:20px 0;">
+    <div class="ct-screen-text" style="flex:0 0 35%;min-width:200px;">
+        <div style="display:inline-block;background:#fb6060;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 12px;border-radius:3px;letter-spacing:.5px;margin-bottom:8px;">Product</div>
+        <h3 style="font-size:19px;font-weight:700;color:#2c2c3e;margin:0 0 6px;">Product Description</h3>
+        <p style="font-size:14.5px;color:#666;margin:0;line-height:1.6;">Generate AI-powered product descriptions directly from the product edit page. One click creates SEO-friendly, professional content for any product.</p>
+    </div>
+    <div class="ct-screen-img" style="flex:1 1 60%;min-width:0;">
+        <img src="GenerateByAIButton_ProductDescription.JPG" alt="AI Generate on Product Description" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+    </div>
+</div>
+
+<div style="width:100%;height:1px;background:#eee;margin-bottom:24px;"></div>
+
+<!-- 2. Blog Post -->
+<div class="ct-screen-row-rev" style="margin-bottom:24px;padding:20px 0;">
+    <div class="ct-screen-text" style="flex:0 0 35%;min-width:200px;">
+        <div style="display:inline-block;background:#4753cb;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 12px;border-radius:3px;letter-spacing:.5px;margin-bottom:8px;">Blog</div>
+        <h3 style="font-size:19px;font-weight:700;color:#2c2c3e;margin:0 0 6px;">Blog Post</h3>
+        <p style="font-size:14.5px;color:#666;margin:0;line-height:1.6;">Create engaging blog content with one click from the blog post editor. AI generates structured, readable posts in your chosen tone and language.</p>
+    </div>
+    <div class="ct-screen-img" style="flex:1 1 60%;min-width:0;">
+        <img src="GenerateByAIButton_Blogs.JPG" alt="AI Generate on Blog Post" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+    </div>
+</div>
+
+<div style="width:100%;height:1px;background:#eee;margin-bottom:24px;"></div>
+
+<!-- 3. News Item -->
+<div class="ct-screen-row" style="margin-bottom:24px;padding:20px 0;">
+    <div class="ct-screen-text" style="flex:0 0 35%;min-width:200px;">
+        <div style="display:inline-block;background:#e67e22;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 12px;border-radius:3px;letter-spacing:.5px;margin-bottom:8px;">News</div>
+        <h3 style="font-size:19px;font-weight:700;color:#2c2c3e;margin:0 0 6px;">News Item</h3>
+        <p style="font-size:14.5px;color:#666;margin:0;line-height:1.6;">Generate professional news content from the news item editor. Perfect for announcements, updates, and store news articles.</p>
+    </div>
+    <div class="ct-screen-img" style="flex:1 1 60%;min-width:0;">
+        <img src="GenerateByAIButton_News.JPG" alt="AI Generate on News Item" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+    </div>
+</div>
+
+<div style="width:100%;height:1px;background:#eee;margin-bottom:24px;"></div>
+
+<!-- 4. Topic Page -->
+<div class="ct-screen-row-rev" style="margin-bottom:24px;padding:20px 0;">
+    <div class="ct-screen-text" style="flex:0 0 35%;min-width:200px;">
+        <div style="display:inline-block;background:#27ae60;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 12px;border-radius:3px;letter-spacing:.5px;margin-bottom:8px;">Topic</div>
+        <h3 style="font-size:19px;font-weight:700;color:#2c2c3e;margin:0 0 6px;">Topic Page</h3>
+        <p style="font-size:14.5px;color:#666;margin:0;line-height:1.6;">Auto-generate topic page content for SEO-friendly informational pages like About Us, Shipping Policy, FAQ, and more.</p>
+    </div>
+    <div class="ct-screen-img" style="flex:1 1 60%;min-width:0;">
+        <img src="GenerateByAIButton_Topic.JPG" alt="AI Generate on Topic Page" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+    </div>
+</div>
+
+<div style="width:100%;height:1px;background:#eee;margin-bottom:24px;"></div>
+
+<!-- 5. Meta Tags -->
+<div class="ct-screen-row" style="margin-bottom:28px;padding:20px 0;">
+    <div class="ct-screen-text" style="flex:0 0 35%;min-width:200px;">
+        <div class="display:inline-block;background:#2c2c3e;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 12px;border-radius:3px;letter-spacing:.5px;margin-bottom:8px;">SEO</div>
+        <h3 style="font-size:19px;font-weight:700;color:#2c2c3e;margin:0 0 6px;">Meta Tag Generation</h3>
+        <p style="font-size:14.5px;color:#666;margin:0;line-height:1.6;">Automatically generates SEO-optimized Meta Title, Meta Keywords, and Meta Description when you save — no extra clicks needed.</p>
+    </div>
+    <div class="ct-screen-img" style="flex:1 1 60%;min-width:0;">
+        <img src="GenerateByAIButton_Seo.JPG" alt="Auto Meta Tag Generation" loading="lazy" style="width:100%;border-radius:6px;border:1px solid #e2e4ec;box-shadow:0 2px 10px rgba(0,0,0,.06);" />
+    </div>
+</div>
+
+<!-- FEATURES -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Features</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<div class="ct-features" style="margin-bottom:28px;">
+    <div class="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #fb6060;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🤖</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">5 AI Providers</strong>
+            <span style="font-size:12px;color:#777;">Azure OpenAI, ChatGPT, Gemini, DeepSeek, AnythingLLM (Free)</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #4753cb;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">📝</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">4 Content Types</strong>
+            <span style="font-size:12px;color:#777;">Products, Blog Posts, News Items, and Topic Pages</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #27ae60;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🏷️</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Auto Meta Tags</strong>
+            <span style="font-size:12px;color:#777;">Meta Title, Meta Keywords, and Meta Description on save</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #e67e22;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🎛️</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Customizable Popup</strong>
+            <span style="font-size:12px;color:#777;">Tone, language, keywords, word limit controls</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #9b59b6;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">✏️</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Custom Prompts</strong>
+            <span style="font-size:12px;color:#777;">Default AI prompts with full custom editing support</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #1abc9c;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🌍</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Multi-Locale</strong>
+            <span style="font-size:12px;color:#777;">Content generation per language locale</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #3498db;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🔀</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Granular Controls</strong>
+            <span style="font-size:12px;color:#777;">Enable/disable each content type and meta field independently</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #f39c12;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">💾</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Save or Copy</strong>
+            <span style="font-size:12px;color:#777;">Save content directly or copy generated HTML without overwriting</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #2c2c3e;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.03);">
+        <span style="font-size:22px;flex-shrink:0;">🔐</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Secure API</strong>
+            <span style="font-size:12px;color:#777;">Secure API key configuration with selected provider</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#fff;border:1px solid #e2e4ec;border-left:4px solid #f39c12;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.06);">
+        <span style="font-size:22px;flex-shrink:0;">📈</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#2c2c3e;margin-bottom:2px;">Scalable</strong>
+            <span style="font-size:12px;color:#777;">Works with hundreds or thousands of products</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#2c2c3e;border:1px solid #2c2c3e;border-left:4px solid #fb6060;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.08);grid-column:1 / -1;">
+        <span style="font-size:22px;flex-shrink:0;">✅</span>
+        <div>
+            <strong style="display:block;font-size:13.5px;color:#fff;margin-bottom:2px;">Compatible with nopCommerce 4.60, 4.70, 4.80, and 4.90</strong>
+            <span style="font-size:12px;color:rgba(255,255,255,.6);">Tested and verified across all four supported versions</span>
+        </div>
+    </div>
+</div>
+
+<p style="margin-bottom:28px;">Get <strong>ChatGPTAIExtension Plugin</strong> to automate content creation for your nopCommerce online store. Check out Clanstech's <a href="https://clanstech.com" target="_blank" rel="noopener" style="color:#1b8fa8;text-decoration:none;font-weight:600;">complete collection of nopCommerce plugins</a> as well for any of your other business needs.</p>
+
+<!-- OUR SERVICES -->
+<h2 style="font-size:20px;font-weight:700;color:#2c2c3e;text-align:center;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Our Services</h2>
+<div style="width:50px;height:3px;background:#fb6060;margin:0 auto 20px;border-radius:2px;"></div>
+
+<div class="ct-svc-row" style="margin-bottom:28px;">
+    <div style="text-align:center;padding:20px 14px;border:1px solid #e2e4ec;border-radius:8px;background:#fafbfd;">
+        <div style="font-size:28px;margin-bottom:6px;">🧩</div>
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:2px;">Custom Plugin Development</strong>
+        <span style="font-size:11.5px;color:#777;">Tailored nopCommerce solutions</span>
+    </div>
+    <div style="text-align:center;padding:20px 14px;border:1px solid #e2e4ec;border-radius:8px;background:#fafbfd;">
+        <div style="font-size:28px;margin-bottom:6px;">⚙️</div>
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:2px;">Plugin Installation &amp; Configuration</strong>
+        <span style="font-size:11.5px;color:#777;">Professional setup on your store</span>
+    </div>
+    <div style="text-align:center;padding:20px 14px;border:1px solid #e2e4ec;border-radius:8px;background:#fafbfd;">
+        <div style="font-size:28px;margin-bottom:6px;">🛟</div>
+        <strong style="display:block;font-size:13px;color:#2c2c3e;margin-bottom:2px;">Maintenance &amp; Support</strong>
+        <span style="font-size:11.5px;color:#777;">Ongoing updates &amp; technical help</span>
+    </div>
+</div>
+
+<!-- FOOTER BANNER -->
+<div style="background:#f4f5f9;border:1px solid #e2e4ec;border-radius:10px;padding:28px 24px;overflow:hidden;">
+
+    <div class="ct-footer-top" style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap;">
+        <img src="Logo_Clanstech.png" alt="Clanstech Logo" style="height:44px;width:auto;object-fit:contain;" />
+        <div style="display:inline-block;background:linear-gradient(135deg,#c0c0c0 0%,#e8e8e8 50%,#b0b0b0 100%);color:#333;padding:6px 16px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;border:1px solid #d0d0d0;">Silver Solution Partner</div>
+        <img src="silver.png" alt="nopCommerce Silver Partner" style="height:48px;width:auto;object-fit:contain;" />
+    </div>
+
+    <div style="width:100%;height:1px;background:#e2e4ec;margin-bottom:20px;"></div>
+
+    <div class="ct-contact-cards" style="margin-bottom:14px;">
+        <a href="mailto:info@clanstech.com" style="display:block;padding:16px 12px;background:#fff;border:1px solid #e2e4ec;border-top:3px solid #fb6060;border-radius:8px;text-decoration:none;text-align:center;">
+            <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#fb6060;margin-bottom:4px;">Email Us</strong>
+            <span style="font-size:12.5px;font-weight:600;color:#2c2c3e;">info@clanstech.com</span>
+        </a>
+        <a href="tel:+917042615658" style="display:block;padding:16px 12px;background:#fff;border:1px solid #e2e4ec;border-top:3px solid #4753cb;border-radius:8px;text-decoration:none;text-align:center;">
+            <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#4753cb;margin-bottom:4px;">Call Us</strong>
+            <span style="font-size:12.5px;font-weight:600;color:#2c2c3e;">+91 704 261 5658</span>
+        </a>
+        <a href="https://clanstech.com" target="_blank" rel="noopener" style="display:block;padding:16px 12px;background:#fff;border:1px solid #e2e4ec;border-top:3px solid #27ae60;border-radius:8px;text-decoration:none;text-align:center;">
+            <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#27ae60;margin-bottom:4px;">Visit Website</strong>
+            <span style="font-size:12.5px;font-weight:600;color:#2c2c3e;">clanstech.com</span>
+        </a>
+    </div>
+
+    <div style="text-align:center;margin-bottom:14px;">
+        <a href="https://www.nopcommerce.com/en/clanstech" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:#1b8fa8;text-decoration:none;">View our nopCommerce Partner Profile →</a>
+    </div>
+
+    <p style="text-align:center;font-size:11px;color:#aaa;margin:0;">© Clanstech — nopCommerce Silver Solution Partner · Noida, India</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
