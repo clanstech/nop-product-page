@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPTAI Extension Plugin – nopCommerce</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ─────────────────────────────────────────────── */
+:root {
+  --red:       #fb6060;
+  --navy:      #2c2c3e;
+  --blue:      #4753cb;
+  --green:     #27ae60;
+  --orange:    #e67e22;
+  --purple:    #9b59b6;
+  --teal:      #1abc9c;
+  --sky:       #3498db;
+  --yellow:    #f39c12;
+  --text:      #444;
+  --muted:     #777;
+  --border:    #e2e4ec;
+  --bg-card:   #fff;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+  --radius:    8px;
+  --tr:        0.2s ease;
+  --font:      'Plus Jakarta Sans','Segoe UI','Helvetica Neue',Arial,sans-serif;
+  --c1: #4f46e5; --c1-bg: #eef2ff;
+  --c2: #0891b2; --c2-bg: #ecfeff;
+  --c3: #059669; --c3-bg: #ecfdf5;
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ─── Base ───────────────────────────────────────────────────── */
+#ct-plugin-desc {
+  max-width: 940px; margin: 0 auto; padding: 0;
+  font-family: var(--font); font-size: 14px; line-height: 1.7; color: var(--text);
+}
+#ct-plugin-desc p { margin: 0 0 14px; }
+#ct-plugin-desc strong { color: var(--navy); }
+
+/* ─── Section Titles ─────────────────────────────────────────── */
+.ct-section-title {
+  font-size: 20px; font-weight: 700; color: var(--navy);
+  text-align: center; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px;
+}
+.ct-section-divider {
+  width: 50px; height: 3px; background: var(--red);
+  margin: 0 auto 20px; border-radius: 2px;
+}
+
+/* ─── CTA Buttons ────────────────────────────────────────────── */
+.ct-btn-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+.ct-btn {
+  display: inline-block; padding: 10px 30px; font-size: 13px; font-weight: 700;
+  text-transform: uppercase; text-decoration: none; border-radius: 4px; letter-spacing: .5px;
+  transition: filter var(--tr), transform var(--tr), box-shadow var(--tr);
+}
+.ct-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.ct-btn-primary   { background: var(--red);  color: #fff; }
+.ct-btn-secondary { background: var(--navy); color: #fff; }
+
+/* ─── Provider Cards ─────────────────────────────────────────── */
+.ct-provs { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 28px; }
+.ct-prov-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 8px; text-align: center; box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--tr), transform var(--tr);
+}
+.ct-prov-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.ct-prov-card img, .ct-prov-card svg { width: 28px; height: 28px; margin: 0 auto 6px; opacity: .8; display: block; }
+.ct-prov-name { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.ct-badge { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; letter-spacing: .3px; }
+.ct-badge-paid { background: #fff3e0; color: var(--orange); }
+.ct-badge-free { background: #e8f5e9; color: var(--green); }
+
+/* ─── Version Cards ──────────────────────────────────────────── */
+.ct-versions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.ct-version-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 24px; text-align: center; box-shadow: var(--shadow-sm); min-width: 100px;
+  transition: box-shadow var(--tr), transform var(--tr);
+}
+.ct-version-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.ct-version-number { display: block; font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.ct-version-number.latest { color: var(--red); }
+.ct-badge-latest    { background: #fff3e0; color: var(--orange); }
+.ct-badge-supported { background: #e8f5e9; color: var(--green); }
+
+/* ─── Image Block ────────────────────────────────────────────── */
+.ct-img-block { text-align: center; margin-bottom: 28px; }
+.ct-img-block img { max-width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); display: inline-block; }
+
+/* ─── Popup ──────────────────────────────────────────────────── */
+.ct-popup { display: flex; gap: 24px; margin-bottom: 28px; align-items: center; flex-wrap: wrap; }
+.ct-popup-img { flex: 1 1 340px; min-width: 0; }
+.ct-popup-img img { width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.ct-popup-text { flex: 1 1 280px; min-width: 0; }
+.ct-popup-item { padding: 6px 0; border-bottom: 1px solid #eee; font-size: 13px; color: var(--navy); }
+.ct-popup-item:last-child { border-bottom: none; }
+.ct-popup-note { margin-top: 10px; font-size: 12px; color: var(--muted); }
+
+/* ─── Works Across Store ─────────────────────────────────────── */
+.ct-screen-row, .ct-screen-row-rev {
+  display: flex; gap: 24px; align-items: center; margin-bottom: 24px; padding: 20px 0;
+}
+.ct-screen-row-rev { flex-direction: row-reverse; }
+.ct-screen-text { flex: 0 0 35%; min-width: 200px; }
+.ct-screen-img  { flex: 1 1 60%; min-width: 0; }
+.ct-screen-img img { width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); transition: box-shadow var(--tr); }
+.ct-screen-img img:hover { box-shadow: var(--shadow-md); }
+.ct-screen-tag { display: inline-block; color: #fff; font-size: 13px; font-weight: 700; text-transform: uppercase; padding: 5px 16px; border-radius: 3px; letter-spacing: .5px; margin-bottom: 10px; }
+.ct-screen-title { font-size: 19px; font-weight: 700; color: var(--navy); margin: 0 0 6px; }
+.ct-screen-desc { font-size: 14.5px; color: #666; margin: 0; line-height: 1.6; }
+.ct-hr { width: 100%; height: 1px; background: #eee; margin-bottom: 24px; }
+
+/* ─── Configuration text ─────────────────────────────────────── */
+.ct-config-text { font-size: 16px; line-height: 1.8; }
+
+/* ─── Features Grid ──────────────────────────────────────────── */
+.ct-features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+.ct-feature-card {
+  display: flex; align-items: flex-start; gap: 14px; padding: 18px 16px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); transition: box-shadow var(--tr), transform var(--tr);
+}
+.ct-feature-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.ct-feature-icon { flex-shrink: 0; width: 38px; height: 38px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.ct-feature-icon svg { width: 18px; height: 18px; display: block; }
+.ct-feature-body { min-width: 0; }
+.ct-feature-name { display: block; font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.ct-feature-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ─── Link ───────────────────────────────────────────────────── */
+.ct-link { color: #1b8fa8; text-decoration: none; font-weight: 600; transition: color var(--tr); }
+.ct-link:hover { color: var(--red); }
+
+/* ══════════════════════════════════════════════════════════════
+   OUR SERVICES — standalone section (outside footer, like Features)
+══════════════════════════════════════════════════════════════ */
+.ct-svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+.ct-svc-card {
+  position: relative; background: #fff;
+  border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 28px 24px 26px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  overflow: hidden; cursor: default;
+  transition: border-color .28s, box-shadow .28s, transform .28s;
+}
+.ct-svc-card:nth-child(1) { --c: var(--c1); --cbg: var(--c1-bg); }
+.ct-svc-card:nth-child(2) { --c: var(--c2); --cbg: var(--c2-bg); }
+.ct-svc-card:nth-child(3) { --c: var(--c3); --cbg: var(--c3-bg); }
+.ct-svc-card:hover { border-color: var(--c); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.05); }
+.ct-svc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.ct-svc-card:hover::before { transform: scaleX(1); }
+.ct-svc-card::after { content: ''; position: absolute; bottom: -40px; right: -40px; width: 120px; height: 120px; background: radial-gradient(circle, color-mix(in srgb, var(--c) 10%, transparent) 0%, transparent 70%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.ct-svc-card:hover::after { opacity: 1; }
+.ct-svc-ico { width: 50px; height: 50px; border-radius: 12px; background: var(--cbg); border: 1.5px solid color-mix(in srgb, var(--c) 20%, transparent); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; flex-shrink: 0; transition: transform .25s, box-shadow .25s; }
+.ct-svc-card:hover .ct-svc-ico { transform: scale(1.08) rotate(-3deg); box-shadow: 0 6px 20px color-mix(in srgb, var(--c) 22%, transparent); }
+.ct-svc-ico svg { width: 22px; height: 22px; display: block; }
+.ct-svc-name { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.35; transition: color .25s; }
+.ct-svc-card:hover .ct-svc-name { color: var(--c); }
+.ct-svc-rule { width: 28px; height: 2.5px; background: var(--c); border-radius: 2px; margin-bottom: 12px; opacity: .3; transition: width .3s, opacity .3s; }
+.ct-svc-card:hover .ct-svc-rule { width: 44px; opacity: 1; }
+.ct-svc-desc { font-size: 12.5px; color: #999; line-height: 1.8; transition: color .25s; }
+.ct-svc-card:hover .ct-svc-desc { color: #666; }
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER  (Brand Header → Contact Us → Bottom Bar)
+══════════════════════════════════════════════════════════════ */
+.ct-footer-wrap {
+  border-radius: 20px; overflow: hidden;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 6px 28px rgba(44,44,62,.08);
+}
+
+/* 1 ── Brand Header */
+.ct-footer-brand {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 36px; background: #fff;
+  border-bottom: 1.5px solid var(--border);
+}
+.ct-brand-left   { display: flex; align-items: center; flex: 1; justify-content: flex-start; }
+.ct-brand-right  { display: flex; align-items: center; flex: 1; justify-content: flex-end; }
+.ct-brand-center { display: flex; align-items: center; justify-content: center; flex: 1; }
+.ct-logo-box     { display: flex; align-items: center; gap: 10px; }
+.ct-footer-logo  { height: 34px; width: auto; object-fit: contain; }
+.ct-partner-logo { height: 36px; width: auto; object-fit: contain; }
+.ct-logo-text    { display: flex; flex-direction: column; line-height: 1.15; }
+.ct-logo-text-main { font-size: 15px; font-weight: 900; color: var(--navy); }
+.ct-logo-text-sub  { font-size: 8px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+.ct-nop-text     { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; }
+.ct-nop-text-main { font-size: 13px; font-weight: 900; color: var(--navy); }
+.ct-nop-text-sub  { font-size: 8px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.ct-silver-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg,#e8e8e8 0%,#f8f8f8 45%,#d4d4d4 55%,#eee 100%);
+  color: #444; padding: 8px 20px; border-radius: 8px;
+  font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.8);
+  white-space: nowrap;
+}
+.ct-silver-badge svg { width: 13px; height: 13px; color: #888; flex-shrink: 0; }
+
+/* 2 ── Contact Us */
+.ct-contact-band {
+  background: #f4f5f9;
+  padding: 36px 32px 32px;
+  border-bottom: 1.5px solid var(--border);
+}
+.ct-contact-band-title {
+  font-size: 20px; font-weight: 800; color: var(--navy);
+  text-align: center; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 8px;
+}
+.ct-contact-band-divider { width: 48px; height: 3px; background: var(--red); margin: 0 auto 32px; border-radius: 2px; }
+.ct-contact-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+.ct-contact-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: #fff; border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 26px 16px 22px; text-decoration: none;
+  position: relative; overflow: hidden;
+  transition: border-color .28s, transform .28s, box-shadow .28s;
+}
+.ct-contact-card:nth-child(1) { --c: var(--c1); --cbg: var(--c1-bg); }
+.ct-contact-card:nth-child(2) { --c: var(--c2); --cbg: var(--c2-bg); }
+.ct-contact-card:nth-child(3) { --c: var(--c3); --cbg: var(--c3-bg); }
+.ct-contact-card:hover { border-color: var(--c); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.09), 0 4px 10px rgba(0,0,0,.05); }
+.ct-contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.ct-contact-card:hover::before { transform: scaleX(1); }
+.ct-contact-card::after { content: ''; position: absolute; bottom: -30px; right: -30px; width: 100px; height: 100px; background: radial-gradient(circle, color-mix(in srgb, var(--c) 10%, transparent) 0%, transparent 70%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.ct-contact-card:hover::after { opacity: 1; }
+.ct-contact-ico { width: 56px; height: 56px; border-radius: 50%; background: var(--cbg); border: 2px solid color-mix(in srgb, var(--c) 22%, transparent); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; flex-shrink: 0; transition: transform .25s, box-shadow .25s; }
+.ct-contact-card:hover .ct-contact-ico { transform: scale(1.1); box-shadow: 0 8px 22px color-mix(in srgb, var(--c) 20%, transparent); }
+.ct-contact-ico svg { width: 22px; height: 22px; display: block; }
+.ct-contact-label { display: block; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--c); margin-bottom: 4px; opacity: .8; transition: opacity .25s; }
+.ct-contact-card:hover .ct-contact-label { opacity: 1; }
+.ct-contact-value { display: block; font-size: 13px; font-weight: 700; color: var(--navy); transition: color .25s; }
+.ct-contact-card:hover .ct-contact-value { color: var(--c); }
+
+/* 3 ── Bottom Bar */
+.ct-footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px; padding: 14px 36px;
+  background: #fff;
+}
+.ct-footer-copy { font-size: 11px; color: var(--muted); margin: 0; }
+.ct-footer-partner-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; color: #1b8fa8;
+  text-decoration: none; transition: color .2s, gap .2s;
+}
+.ct-footer-partner-link:hover { color: var(--navy); gap: 8px; }
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #ct-plugin-desc   { font-size: 13px; }
+  .ct-section-title { font-size: 18px; }
+  .ct-provs         { grid-template-columns: repeat(3,1fr); }
+  .ct-features      { grid-template-columns: 1fr; }
+  .ct-popup         { flex-direction: column; }
+  .ct-screen-row, .ct-screen-row-rev { flex-direction: column; }
+  .ct-screen-text, .ct-screen-img    { flex: 1 1 100%; min-width: 0; }
+  .ct-svc-grid      { grid-template-columns: 1fr; gap: 12px; }
+  .ct-contact-cards { grid-template-columns: 1fr; gap: 10px; }
+  .ct-footer-brand  { flex-direction: column; align-items: center; padding: 20px; gap: 16px; }
+  .ct-brand-left, .ct-brand-right { justify-content: center; }
+  .ct-contact-band  { padding: 24px 20px; }
+  .ct-footer-bottom { flex-direction: column; align-items: flex-start; padding: 14px 20px; }
+}
+@media (max-width: 480px) {
+  .ct-provs   { grid-template-columns: 1fr 1fr; }
+  .ct-btn-row { flex-direction: column; align-items: stretch; }
+  .ct-btn-row .ct-btn { text-align: center; }
+}
+</style>
+</head>
+<body>
+<div id="ct-plugin-desc">
+
+  <!-- ── CTA Buttons ── -->
+  <div class="ct-btn-row">
+    <a href="/chatgptaiextension-plugin" class="ct-btn ct-btn-primary">Get It Now</a>
+    <a href="/chatgptaiextension-plugin-documentation" class="ct-btn ct-btn-secondary">Documentation</a>
+  </div>
+
+  <!-- ── Intro ── -->
+  <p>The <strong>ChatGPTAI Extension Plugin for nopCommerce</strong> is a powerful AI-driven content generation solution supporting <strong>Five AI Providers</strong> - Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AI option AnythingLLM. It automatically creates SEO-friendly descriptions for Products, Blog posts, News Items, and Topic pages. The plugin also generates Meta Title, Meta Keywords, and Meta Description based on configuration settings.</p>
+  <p>Designed to save time and reduce manual effort, it ensures consistent and professional content across your website. With one-click functionality and secure API integration, it helps improve search engine visibility and overall store performance.</p>
+  <p style="margin-bottom:28px;">Whether you manage a small store or a large-scale eCommerce platform, this plugin simplifies content creation, improves productivity, and enhances overall store performance across <strong>nopCommerce 4.6, 4.7, 4.8, and 4.9</strong>.</p>
+
+  <!-- ── Banner ── -->
+  <div class="ct-img-block">
+    <img src="plugin-disciption-banner-chatgptai.jpg" alt="ChatGPTAI Extension Plugin for nopCommerce" loading="lazy" width="940" />
+  </div>
+
+  <!-- ── Supported AI Providers ── -->
+  <h2 class="ct-section-title">Supported AI Providers</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-provs">
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftazure.svg" alt="Azure" width="28" height="28" />
+      <strong class="ct-prov-name">Azure OpenAI</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg" alt="ChatGPT" width="28" height="28" />
+      <strong class="ct-prov-name">ChatGPT</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" alt="Gemini" width="28" height="28" />
+      <strong class="ct-prov-name">Gemini</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <svg viewBox="0 0 24 24" width="28" height="28" style="opacity:.8;display:block;margin:0 auto 6px;">
+        <path fill="#4D6BFE" d="M22.59 12.83c-.28-.16-.56-.1-.8.08-.06.04-.11.1-.17.15-.37.37-.71.52-1.08.46-.48-.08-.88-.51-1.3-1.06-.36-.48-.72-1.05-1.22-1.43a3.95 3.95 0 00-1.1-.57c.25-.38.4-.84.4-1.35A2.82 2.82 0 0015.5 6.3a2.82 2.82 0 00-2.82 2.81c0 .14.01.28.03.41-.46-.05-.93-.07-1.41-.05-2.06.09-3.82.89-4.98 2.2a5.34 5.34 0 00-1.32 3.7c.07 2.94 2.08 5.34 4.97 5.97.62.14 1.26.2 1.9.17 1.57-.07 3.1-.65 4.28-1.7.63-.56 1.14-1.22 1.5-1.96.15.06.3.1.46.13.96.18 1.81-.2 2.46-.88.5-.52.84-1.17.97-1.87.07-.37-.06-.57-.35-.73zM9.75 15.7a1.15 1.15 0 110-2.3 1.15 1.15 0 010 2.3zm4.5 0a1.15 1.15 0 110-2.3 1.15 1.15 0 010 2.3z"/>
+      </svg>
+      <strong class="ct-prov-name">DeepSeek</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <svg viewBox="0 0 24 24" width="28" height="28" style="opacity:.8;display:block;margin:0 auto 6px;">
+        <path fill="#333" d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/>
+      </svg>
+      <strong class="ct-prov-name">AnythingLLM</strong>
+      <span class="ct-badge ct-badge-free">Free</span>
+    </div>
+  </div>
+
+  <!-- ── Supported Versions ── -->
+  <h2 class="ct-section-title">Supported nopCommerce Versions</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-versions">
+    <div class="ct-version-card"><strong class="ct-version-number">4.60</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number">4.70</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number">4.80</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number latest">4.90</strong><span class="ct-badge ct-badge-latest">Latest</span></div>
+  </div>
+
+  <!-- ── Configuration ── -->
+  <h2 class="ct-section-title">Configuration</h2>
+  <div class="ct-section-divider"></div>
+  <p class="ct-config-text">After installing the plugin, navigate to <strong>Configuration → ChatGPTAI Extension</strong> in your nopCommerce admin panel. The configuration page lets you set up everything in one place — enable AI services, select your preferred AI provider, enter your API key, toggle content sections (Products, Blog, News, Topics, Meta Tags), and customize the default AI prompts for each content type.</p>
+  <p class="ct-config-text" style="margin-bottom:16px;">Once configured, the <strong>"Generate Using AI"</strong> button appears on the relevant editor pages throughout your admin panel. Simply click it, customize your query in the popup, and let AI generate professional, SEO-optimized content instantly.</p>
+  <div class="ct-img-block">
+    <img src="configure_chatgptaiextension.png" alt="ChatGPTAI Extension Configuration Page" loading="lazy" />
+  </div>
+
+  <!-- ── Customize Popup ── -->
+  <h2 class="ct-section-title">Customize AI Query Popup</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-popup">
+    <div class="ct-popup-img">
+      <img src="customize_window.png" alt="Customize AI Query Popup" loading="lazy" />
+    </div>
+    <div class="ct-popup-text">
+      <p style="margin-bottom:10px;">When you click <strong>"Generate Using AI"</strong>, a popup opens where you can customize:</p>
+      <div class="ct-popup-item">- Name (auto-filled, editable)</div>
+      <div class="ct-popup-item">- Target Language</div>
+      <div class="ct-popup-item">- Features &amp; Keywords</div>
+      <div class="ct-popup-item">- Word Limit</div>
+      <div class="ct-popup-item">- Tone of Voice</div>
+      <div class="ct-popup-item">- Custom Tone of Voice</div>
+      <div class="ct-popup-item">- Special Instructions</div>
+      <p class="ct-popup-note">All values combine with the configured prompt and are sent to the selected AI provider. Content is generated in the selected language.</p>
+    </div>
+  </div>
+
+  <!-- ── Works Across Your Store ── -->
+  <h2 class="ct-section-title">Works Across Your Store</h2>
+  <div class="ct-section-divider"></div>
+
+  <div class="ct-screen-row">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--red);">Product</span>
+      <h3 class="ct-screen-title">Products</h3>
+      <p class="ct-screen-desc">Generate high-quality, AI-powered product descriptions directly from the product edit page. With just one click, create SEO-optimized, engaging, and professional content for any product — saving time and improving your store's visibility.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_ProductDescription.JPG" alt="Product Description" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row-rev">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--blue);">Blog</span>
+      <h3 class="ct-screen-title">Blog Posts</h3>
+      <p class="ct-screen-desc">Create high-quality blog content instantly with one click from the blog post editor. AI generates well-structured, engaging, and SEO-friendly articles in your preferred tone and language.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Blogs.JPG" alt="Blog Post" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--orange);">News</span>
+      <h3 class="ct-screen-title">News Items</h3>
+      <p class="ct-screen-desc">Generate high-quality news content instantly from the news item editor. Create well-structured, professional articles perfect for announcements, updates, and store news.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_News.JPG" alt="News Item" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row-rev">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--green);">Topic</span>
+      <h3 class="ct-screen-title">Topic (Pages)</h3>
+      <p class="ct-screen-desc">Automatically generate SEO-friendly content for topic pages such as About Us, Shipping Policy, FAQ, and more. Create well-structured, informative, and professional pages in seconds.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Topic.JPG" alt="Topic Page" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row" style="margin-bottom:28px;">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--navy);">SEO</span>
+      <h3 class="ct-screen-title">Meta Tag Generation</h3>
+      <p class="ct-screen-desc">Save time with intelligent SEO automation. The system instantly creates optimized Meta Title, Meta Keywords, and Meta Description when you click save, ensuring better search visibility.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Seo.JPG" alt="Meta Tag Generation" loading="lazy" /></div>
+  </div>
+
+  <!-- ── Features ── -->
+  <h2 class="ct-section-title">Features</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-features">
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fff0f0;"><svg viewBox="0 0 24 24" fill="none" stroke="#fb6060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Five AI Providers</strong><span class="ct-feature-desc">Azure OpenAI, ChatGPT, Gemini, DeepSeek, AnythingLLM (Free)</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0f1ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#4753cb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Four Content Types</strong><span class="ct-feature-desc">Products, Blog Posts, News Items, and Topic Pages</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0faf4;"><svg viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="#27ae60" stroke="none"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">SEO &amp; Auto Meta Tags</strong><span class="ct-feature-desc">Meta Title, Meta Keywords, and Meta Description on save</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fff3e8;"><svg viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Customizable Popup</strong><span class="ct-feature-desc">Tone, language, keywords, word limit controls</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f8f0ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Custom Prompts</strong><span class="ct-feature-desc">Default AI prompts with full custom editing support</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#edfaf6;"><svg viewBox="0 0 24 24" fill="none" stroke="#1abc9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Multi-Locale</strong><span class="ct-feature-desc">Content generation per language locale</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#eef6fd;"><svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="#3498db" stroke="none"/><circle cx="16" cy="12" r="2" fill="#3498db" stroke="none"/><circle cx="10" cy="18" r="2" fill="#3498db" stroke="none"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Granular Controls</strong><span class="ct-feature-desc">Enable/disable each content type and meta field independently</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fffbee;"><svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Save or Copy</strong><span class="ct-feature-desc">Save content directly or copy generated HTML without overwriting</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0f1f5;"><svg viewBox="0 0 24 24" fill="none" stroke="#2c2c3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Secure API</strong><span class="ct-feature-desc">Secure API key configuration with selected provider</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fffbee;"><svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Scalable</strong><span class="ct-feature-desc">Works with hundreds or thousands of products</span></div></div>
+  </div>
+
+  <p style="margin-bottom:28px;">Get <strong>ChatGPTAIExtension Plugin</strong> to automate content creation for your nopCommerce online store. Check out Clanstech's <a href="https://clanstech.com" target="_blank" rel="noopener" class="ct-link">complete collection of nopCommerce plugins</a> for all your business needs.</p>
+
+  <!-- ══ OUR SERVICES — standalone, outside footer ══ -->
+  <h2 class="ct-section-title">Our Services</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-svc-grid" style="margin-bottom:32px;">
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="ct-svc-name">Custom Plugin Development</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">We develop custom nopCommerce plugins tailored to your business needs. From idea to deployment, we deliver secure, scalable, and production-ready solutions.</div>
+    </div>
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg></div>
+      <div class="ct-svc-name">Plugin Installation &amp; Configuration</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">Professional plugin installation, setup, and configuration for your live or staging store. We ensure smooth integration and proper optimization.</div>
+    </div>
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+      <div class="ct-svc-name">Maintenance &amp; Support</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">Ongoing updates, bug fixes, and technical support to keep your store secure, stable, and performing at its best.</div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER: Brand Header → Contact Us → Bottom Bar ══ -->
+  <div class="ct-footer-wrap">
+
+    <!-- 1. Brand Header: Clanstech Logo | Silver Badge | nopCommerce Logo -->
+    <div class="ct-footer-brand">
+      <div class="ct-brand-left">
+        <div class="ct-logo-box">
+          <img src="Logo_Clanstech.png" alt="Clanstech" class="ct-footer-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="ct-logo-text" style="display:none;">
+            <span class="ct-logo-text-main">Clanstech</span>
+            <span class="ct-logo-text-sub">Technology Solutions</span>
+          </div>
+        </div>
+      </div>
+      <div class="ct-brand-center">
+        <div class="ct-silver-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          Silver Solution Partner
+        </div>
+      </div>
+      <div class="ct-brand-right">
+        <div class="ct-logo-box">
+          <img src="silver.png" alt="nopCommerce Silver Partner" class="ct-partner-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="ct-nop-text" style="display:none;">
+            <span class="ct-nop-text-main">nopCommerce</span>
+            <span class="ct-nop-text-sub">Official Partner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Contact Us -->
+    <div class="ct-contact-band">
+      <h2 class="ct-contact-band-title">Contact Us</h2>
+      <div class="ct-contact-band-divider"></div>
+      <div class="ct-contact-cards">
+        <a href="mailto:info@clanstech.com" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Email Us</span>
+            <span class="ct-contact-value">info@clanstech.com</span>
+          </div>
+        </a>
+        <a href="tel:+917042615658" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Call Us</span>
+            <span class="ct-contact-value">+91 704 261 5658</span>
+          </div>
+        </a>
+        <a href="https://clanstech.com" target="_blank" rel="noopener" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Visit Website</span>
+            <span class="ct-contact-value">clanstech.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Bottom Bar -->
+    <div class="ct-footer-bottom">
+      <p class="ct-footer-copy">&copy; 2025 Clanstech Technology Solutions. All rights reserved.</p>
+      <a href="https://www.nopcommerce.com/en/clanstech" target="_blank" rel="noopener" class="ct-footer-partner-link">
+        View nopCommerce Partner Profile
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </div><!-- end ct-footer-wrap -->
+
+</div><!-- end #ct-plugin-desc -->
+</body>
+</html>
