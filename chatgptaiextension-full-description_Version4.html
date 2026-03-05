@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPTAI Extension Plugin – Full Description</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --nop-primary:      #38C3DB;
+            --nop-primary-dk:   #1b8fa8;
+            --nop-dark:         #313131;
+            --nop-text:         #4a4a4a;
+            --nop-light-bg:     #f5f9fb;
+            --nop-white:        #ffffff;
+            --nop-border:       #e4e9ed;
+            --nop-accent:       #4753cb;
+            --nop-cta:          #fb6060;
+            --nop-cta-hover:    #e04545;
+            --nop-green:        #27ae60;
+            --nop-orange:       #e67e22;
+            --nop-gradient:     linear-gradient(135deg, #38C3DB 0%, #1b8fa8 100%);
+            --nop-gradient-alt: linear-gradient(135deg, #4753cb 0%, #38C3DB 100%);
+            --nop-radius:       10px;
+            --nop-shadow:       0 4px 24px rgba(0,0,0,.06);
+            --nop-shadow-lg:    0 8px 40px rgba(0,0,0,.09);
+            --nop-font:         'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--nop-font);
+            font-size: 15px;
+            line-height: 1.72;
+            color: var(--nop-text);
+            background: var(--nop-light-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 16px 60px;
+        }
+
+        /* ── Hero ─────────────────────────────────── */
+        .fd-hero {
+            background: var(--nop-gradient-alt);
+            border-radius: 0 0 14px 14px;
+            padding: 56px 36px 48px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--nop-shadow-lg);
+            margin-bottom: 36px;
+        }
+        .fd-hero::before {
+            content:''; position:absolute; width:400px; height:400px;
+            background:rgba(255,255,255,.055); border-radius:50%;
+            top:-150px; right:-110px;
+        }
+        .fd-hero::after {
+            content:''; position:absolute; width:240px; height:240px;
+            background:rgba(255,255,255,.045); border-radius:50%;
+            bottom:-90px; left:-60px;
+        }
+        .fd-hero .badges { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:18px; position:relative; z-index:1; }
+        .fd-hero .badge-pill {
+            display:inline-block; background:rgba(255,255,255,.17);
+            border:1px solid rgba(255,255,255,.28); border-radius:20px;
+            padding:5px 16px; font-size:11px; font-weight:700;
+            letter-spacing:.5px; text-transform:uppercase;
+        }
+        .fd-hero h1 { font-size:32px; font-weight:800; margin-bottom:12px; position:relative; z-index:1; }
+        .fd-hero .sub { font-size:15.5px; opacity:.93; max-width:700px; margin:0 auto; line-height:1.65; position:relative; z-index:1; }
+
+        /* ── Section card ─────────────────────────── */
+        .section {
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: var(--nop-radius);
+            padding: 36px 38px;
+            margin-bottom: 28px;
+            box-shadow: var(--nop-shadow);
+        }
+        .section-head {
+            display:flex; align-items:center; gap:14px; margin-bottom:20px;
+        }
+        .section-head .ic {
+            width:42px; height:42px; min-width:42px;
+            background:var(--nop-gradient); color:#fff;
+            border-radius:10px; display:flex; align-items:center;
+            justify-content:center; font-size:19px;
+        }
+        .section-head h2 {
+            font-size:22px; font-weight:700; color:var(--nop-dark); margin:0;
+        }
+        .section p { margin-bottom:14px; }
+        .section p:last-child { margin-bottom:0; }
+
+        /* ── CTA button ───────────────────────────── */
+        .cta-wrap { text-align:center; margin-top:24px; }
+        a.cta-btn {
+            display:inline-block; background:var(--nop-cta); color:#fff;
+            padding:13px 38px; font-size:15px; font-weight:700;
+            text-transform:uppercase; text-decoration:none;
+            border:1px solid var(--nop-cta); letter-spacing:.4px;
+            transition:all .2s;
+        }
+        a.cta-btn:hover {
+            background:var(--nop-cta-hover); border-color:var(--nop-cta-hover);
+            transform:translateY(-2px); box-shadow:0 6px 22px rgba(251,96,96,.35);
+        }
+
+        /* ── Bullet check list ────────────────────── */
+        .check-list { list-style:none; padding:0; margin:12px 0 0; }
+        .check-list li {
+            display:flex; align-items:flex-start; gap:10px;
+            padding:10px 14px; margin-bottom:8px;
+            background:var(--nop-light-bg); border-radius:8px;
+            border-left:4px solid var(--nop-primary); font-size:14.5px;
+        }
+        .check-list li i { color:var(--nop-green); margin-top:3px; flex-shrink:0; }
+        .check-list li strong { color:var(--nop-dark); }
+
+        /* ── Challenge cards (2×2) ────────────────── */
+        .challenge-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:18px; margin-top:14px;
+        }
+        .challenge-card {
+            background:var(--nop-light-bg); border:1px solid var(--nop-border);
+            border-radius:10px; padding:22px 20px;
+            display:flex; gap:14px; align-items:flex-start;
+            transition:transform .2s, box-shadow .2s;
+        }
+        .challenge-card:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(56,195,219,.12); }
+        .challenge-card .cc-ic {
+            width:44px; height:44px; min-width:44px;
+            background:var(--nop-gradient); border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:19px; color:#fff;
+        }
+        .challenge-card h4 { font-size:15px; font-weight:700; color:var(--nop-dark); margin:0 0 4px; }
+        .challenge-card p { font-size:13px; color:var(--nop-text); margin:0; line-height:1.55; }
+
+        /* ── Provider cards ───────────────────────── */
+        .providers-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+            gap:14px; margin-top:16px;
+        }
+        .prov-card {
+            background:var(--nop-light-bg); border:1px solid var(--nop-border);
+            border-radius:10px; padding:20px 16px; text-align:center;
+            transition:transform .2s, box-shadow .2s, border-color .2s;
+        }
+        .prov-card:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(56,195,219,.14); border-color:var(--nop-primary); }
+        .prov-card .pi {
+            width:48px; height:48px; background:var(--nop-gradient);
+            border-radius:12px; display:flex; align-items:center;
+            justify-content:center; font-size:22px; margin:0 auto 10px; color:#fff;
+        }
+        .prov-card h4 { font-size:14px; font-weight:700; color:var(--nop-dark); margin-bottom:4px; }
+        .prov-card .prov-badge {
+            display:inline-block; font-size:10px; font-weight:700;
+            text-transform:uppercase; letter-spacing:.5px;
+            padding:2px 10px; border-radius:10px; margin-bottom:8px;
+        }
+        .prov-badge.paid { background:#fff3e0; color:var(--nop-orange); }
+        .prov-badge.free  { background:#e8f5e9; color:var(--nop-green); }
+        .prov-card ul { list-style:none; padding:0; margin:0; text-align:left; }
+        .prov-card ul li { font-size:12px; color:var(--nop-text); padding:2px 0; }
+        .prov-card ul li::before { content:'✓ '; color:var(--nop-primary); font-weight:700; }
+
+        /* ── Content-type pills ───────────────────── */
+        .ct-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+            gap:12px; margin-top:16px;
+        }
+        .ct-pill {
+            background:var(--nop-light-bg); border:1px solid var(--nop-border);
+            border-radius:10px; padding:18px 10px; text-align:center;
+            transition:transform .2s;
+        }
+        .ct-pill:hover { transform:translateY(-3px); }
+        .ct-pill .ct-emoji { font-size:26px; margin-bottom:6px; }
+        .ct-pill h4 { font-size:13px; font-weight:700; color:var(--nop-dark); margin:0; }
+        .ct-pill p { font-size:11px; color:var(--nop-text); margin:3px 0 0; }
+
+        /* ── Popup highlight ──────────────────────── */
+        .popup-row {
+            display:flex; flex-wrap:wrap; gap:24px; margin-top:16px; align-items:center;
+        }
+        .popup-row .popup-img { flex:1 1 380px; min-width:260px; }
+        .popup-row .popup-img img {
+            width:100%; border-radius:10px; border:1px solid var(--nop-border);
+            box-shadow:5px 5px 15px 5px #ccc;
+        }
+        .popup-row .popup-info { flex:1 1 300px; min-width:240px; }
+        .popup-row .popup-info h3 { font-size:18px; font-weight:700; color:var(--nop-dark); margin-bottom:10px; }
+        .popup-fields { list-style:none; padding:0; margin:0; }
+        .popup-fields li {
+            display:flex; align-items:center; gap:10px;
+            padding:8px 12px; background:var(--nop-light-bg);
+            border:1px solid var(--nop-border); border-radius:8px;
+            margin-bottom:7px; font-size:13.5px; font-weight:600; color:var(--nop-dark);
+        }
+        .popup-fields li i { color:var(--nop-primary); font-size:15px; width:20px; text-align:center; }
+
+        /* ── Version badges ───────────────────────── */
+        .ver-badges { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 6px; }
+        .ver-badge {
+            display:inline-block; padding:4px 14px; border-radius:6px;
+            font-size:13px; font-weight:600; background:#e3f2fd; color:#1565c0;
+        }
+
+        /* ── Steps timeline ───────────────────────── */
+        .steps { counter-reset:step; list-style:none; padding:0; margin-top:14px; position:relative; }
+        .steps::before {
+            content:''; position:absolute; left:19px; top:20px; bottom:20px;
+            width:2px; background:var(--nop-border);
+        }
+        .steps li {
+            counter-increment:step; display:flex; align-items:flex-start;
+            gap:18px; padding:14px 0; position:relative;
+        }
+        .steps li::before {
+            content:counter(step); display:flex; align-items:center;
+            justify-content:center; width:40px; height:40px; min-width:40px;
+            background:var(--nop-gradient); color:#fff; font-weight:800;
+            font-size:15px; border-radius:50%; z-index:1;
+            box-shadow:0 2px 10px rgba(56,195,219,.28);
+        }
+        .steps li .sc { padding-top:6px; }
+        .steps li .sc strong { display:block; color:var(--nop-dark); font-size:15.5px; margin-bottom:3px; }
+        .steps li .sc span { font-size:13.5px; color:var(--nop-text); line-height:1.6; }
+
+        /* ── Who-benefits grid ────────────────────── */
+        .who-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:16px; margin-top:14px;
+        }
+        .who-card {
+            display:flex; gap:14px; align-items:flex-start;
+            padding:20px 18px; background:var(--nop-light-bg);
+            border:1px solid var(--nop-border); border-radius:10px;
+            transition:box-shadow .2s;
+        }
+        .who-card:hover { box-shadow:0 4px 16px rgba(71,83,203,.1); }
+        .who-card .wi {
+            width:42px; height:42px; min-width:42px;
+            background:var(--nop-gradient-alt); border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            color:#fff; font-size:18px;
+        }
+        .who-card h4 { font-size:14.5px; font-weight:700; color:var(--nop-dark); margin:0 0 3px; }
+        .who-card p  { font-size:12.5px; color:var(--nop-text); margin:0; line-height:1.55; }
+
+        /* ── Feature cards grid ───────────────────── */
+        .feat-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:18px; margin-top:14px;
+        }
+        .feat-card {
+            background:var(--nop-light-bg); border:1px solid var(--nop-border);
+            border-radius:10px; padding:22px 20px;
+            display:flex; gap:14px; align-items:flex-start;
+            transition:transform .2s, box-shadow .2s;
+        }
+        .feat-card:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(56,195,219,.13); }
+        .feat-card .fi {
+            width:44px; height:44px; min-width:44px;
+            background:var(--nop-gradient); border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:20px; color:#fff;
+        }
+        .feat-card h4 { font-size:14.5px; font-weight:700; color:var(--nop-dark); margin:0 0 4px; }
+        .feat-card p  { font-size:13px; color:var(--nop-text); margin:0; line-height:1.55; }
+
+        /* ── Use-case mini cards ──────────────────── */
+        .uc-grid {
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+            gap:14px; margin-top:14px;
+        }
+        .uc-card {
+            background:var(--nop-light-bg); border:1px solid var(--nop-border);
+            border-radius:10px; padding:20px 16px; text-align:center;
+            transition:transform .2s, border-color .2s;
+        }
+        .uc-card:hover { transform:translateY(-3px); border-color:var(--nop-accent); }
+        .uc-card .uc-em { font-size:28px; margin-bottom:8px; }
+        .uc-card h4 { font-size:14px; font-weight:700; color:var(--nop-dark); margin:0 0 4px; }
+        .uc-card p  { font-size:12.5px; color:var(--nop-text); margin:0; line-height:1.5; }
+
+        /* ── CX list ──────────────────────────────── */
+        .cx-list { list-style:none; padding:0; margin:14px 0 0; }
+        .cx-list li {
+            display:flex; gap:12px; align-items:flex-start;
+            padding:14px 16px; border-bottom:1px solid var(--nop-border);
+            font-size:14px;
+        }
+        .cx-list li:last-child { border-bottom:none; }
+        .cx-list li i { color:var(--nop-accent); font-size:18px; margin-top:2px; flex-shrink:0; }
+        .cx-list li strong { color:var(--nop-dark); }
+
+        /* ── Conclusion banner ────────────────────── */
+        .fd-conclusion {
+            background:var(--nop-gradient); border-radius:var(--nop-radius);
+            padding:40px 36px; color:#fff; text-align:center;
+            position:relative; overflow:hidden; margin-top:4px;
+        }
+        .fd-conclusion::before {
+            content:''; position:absolute; width:260px; height:260px;
+            background:rgba(255,255,255,.06); border-radius:50%;
+            top:-80px; right:-60px;
+        }
+        .fd-conclusion h2 { font-size:24px; font-weight:800; margin-bottom:14px; position:relative; z-index:1; }
+        .fd-conclusion p  { font-size:14.5px; opacity:.95; max-width:700px; margin:0 auto 22px; line-height:1.65; position:relative; z-index:1; }
+        .fd-conclusion a.cta-btn { background:#fff; color:var(--nop-cta); border-color:#fff; position:relative; z-index:1; }
+        .fd-conclusion a.cta-btn:hover { background:#f0f0f0; border-color:#f0f0f0; }
+
+        /* ── Sub-headings inside sections ─────────── */
+        .sub-heading {
+            font-size:17px; font-weight:700; color:var(--nop-dark);
+            margin:28px 0 10px; display:flex; align-items:center; gap:8px;
+        }
+        .sub-heading i { color:var(--nop-primary); }
+
+        /* ── Divider CTA ──────────────────────────── */
+        .div-cta {
+            text-align:center; margin-top:24px; padding-top:20px;
+            border-top:1px solid var(--nop-border);
+        }
+
+        /* ── Responsive ───────────────────────────── */
+        @media(max-width:768px){
+            .fd-hero { padding:40px 20px 34px; }
+            .fd-hero h1 { font-size:24px; }
+            .section { padding:26px 20px; }
+            .challenge-grid, .feat-grid, .who-grid { grid-template-columns:1fr; }
+            .providers-grid { grid-template-columns:repeat(2,1fr); }
+            .popup-row { flex-direction:column; }
+            .ct-grid { grid-template-columns:repeat(3,1fr); }
+        }
+        @media(max-width:480px){
+            .providers-grid, .ct-grid { grid-template-columns:1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════ -->
+<div class="fd-hero">
+    <div class="badges">
+        <span class="badge-pill">5 AI Providers</span>
+        <span class="badge-pill">Products • Blogs • News • Topics</span>
+        <span class="badge-pill">nopCommerce 4.6 – 4.9</span>
+    </div>
+    <h1>ChatGPTAI Extension Plugin</h1>
+    <p class="sub">A powerful AI-driven content generation solution supporting 5 AI models — Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AnythingLLM. Automatically creates SEO-friendly descriptions, meta tags, and professional content across your entire nopCommerce store.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     1. WHY DESCRIPTIONS MATTER
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-lightbulb"></i></div>
+        <h2>Why Product Descriptions Can Make or Break Your Online Store</h2>
+    </div>
+    <p>In today's competitive eCommerce market, high-quality content is no longer optional — it is essential. Every product description, blog post, news item, and topic page plays a critical role in attracting visitors, improving search engine rankings, and converting customers.</p>
+    <p>For nopCommerce store owners, managing content manually can quickly become overwhelming. Writing SEO-optimized product descriptions, generating meta tags, and maintaining consistent brand tone across hundreds of pages takes time and effort.</p>
+    <p>That's where the <strong>ChatGPTAIExtension Plugin for nopCommerce</strong> becomes a game-changing solution.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     2. WHY CONTENT QUALITY MATTERS
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-star"></i></div>
+        <h2>Why Content Quality Matters in nopCommerce</h2>
+    </div>
+    <p>Search engines rank websites based on content relevance, keyword optimization, and user engagement. Poorly written or duplicated descriptions can harm your rankings and reduce customer trust.</p>
+    <p>Strong content helps you:</p>
+    <ul class="check-list">
+        <li><i class="fa fa-check-circle"></i><div><strong>Improve organic search visibility</strong></div></li>
+        <li><i class="fa fa-check-circle"></i><div><strong>Increase click-through rates (CTR)</strong></div></li>
+        <li><i class="fa fa-check-circle"></i><div><strong>Build brand credibility</strong></div></li>
+        <li><i class="fa fa-check-circle"></i><div><strong>Enhance customer experience</strong></div></li>
+        <li><i class="fa fa-check-circle"></i><div><strong>Boost conversion rates</strong></div></li>
+    </ul>
+    <p style="margin-top:16px;">However, scaling high-quality content across product pages, blog posts, news items, and topic pages is one of the biggest challenges for growing eCommerce businesses.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     3. COMMON CHALLENGES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-triangle-exclamation"></i></div>
+        <h2>The Common Challenges in eCommerce Content Creation</h2>
+    </div>
+    <p>Creating content across all areas of an online store often becomes overwhelming. Here's why:</p>
+    <div class="challenge-grid">
+        <div class="challenge-card">
+            <div class="cc-ic"><i class="fa fa-clock"></i></div>
+            <div>
+                <h4>Time-Consuming &amp; Repetitive</h4>
+                <p>Writing descriptions, meta tags, keywords, and long-form content manually can take hours per product. Multiply by thousands and it becomes unmanageable.</p>
+            </div>
+        </div>
+        <div class="challenge-card">
+            <div class="cc-ic"><i class="fa fa-shuffle"></i></div>
+            <div>
+                <h4>Inconsistent Tone &amp; Style</h4>
+                <p>Multiple writers or rushed writing leads to uneven tone, mismatched style, unclear messaging, and lower professionalism — affecting customer trust.</p>
+            </div>
+        </div>
+        <div class="challenge-card">
+            <div class="cc-ic"><i class="fa fa-circle-exclamation"></i></div>
+            <div>
+                <h4>Missing Key Information</h4>
+                <p>Manual content writing often results in missing specifications, unclear benefits, poor SEO, and incomplete product details — leading to lower conversions.</p>
+            </div>
+        </div>
+        <div class="challenge-card">
+            <div class="cc-ic"><i class="fa fa-chart-line"></i></div>
+            <div>
+                <h4>Poor Scalability</h4>
+                <p>The larger the catalog, the harder it becomes to maintain consistency. Updating large numbers of descriptions or meta fields manually becomes nearly impossible.</p>
+            </div>
+        </div>
+    </div>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     4. INTRODUCING THE UPGRADED PLUGIN
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-rocket"></i></div>
+        <h2>Introducing the Upgraded ChatGPTAIExtension Plugin</h2>
+    </div>
+    <p>We're excited to announce a <strong>major upgrade</strong> to the <strong>ChatGPTAIExtension Plugin for nopCommerce</strong>! Previously, the plugin supported Azure OpenAI (paid) for AI-powered product descriptions. With this update, we've added <strong>new AI providers</strong> and features to give you more flexibility and control.</p>
+
+    <!-- 4a. 5 AI Providers -->
+    <div class="sub-heading"><i class="fa fa-bolt"></i> Support for 5 AI Providers</div>
+    <p>Choose the provider that best fits your business needs:</p>
+    <div class="providers-grid">
+        <div class="prov-card">
+            <div class="pi"><i class="fa fa-cloud"></i></div>
+            <h4>Azure OpenAI</h4>
+            <span class="prov-badge paid">Paid</span>
+            <ul>
+                <li>Enterprise-grade performance</li>
+                <li>High accuracy &amp; reliability</li>
+                <li>Secure cloud infrastructure</li>
+                <li>Ideal for large-scale stores</li>
+            </ul>
+        </div>
+        <div class="prov-card">
+            <div class="pi"><i class="fa fa-comments"></i></div>
+            <h4>ChatGPT</h4>
+            <span class="prov-badge paid">Paid</span>
+            <ul>
+                <li>Natural, human-like language</li>
+                <li>Marketing-focused content</li>
+                <li>Engaging, persuasive tone</li>
+                <li>Strong SEO-friendly writing</li>
+            </ul>
+        </div>
+        <div class="prov-card">
+            <div class="pi"><i class="fa fa-gem"></i></div>
+            <h4>Gemini</h4>
+            <span class="prov-badge paid">Paid</span>
+            <ul>
+                <li>Fast response generation</li>
+                <li>Optimized structured outputs</li>
+                <li>Scalable content creation</li>
+            </ul>
+        </div>
+        <div class="prov-card">
+            <div class="pi"><i class="fa fa-brain"></i></div>
+            <h4>DeepSeek</h4>
+            <span class="prov-badge paid">Paid</span>
+            <ul>
+                <li>Intelligent context understanding</li>
+                <li>Strong long-form generation</li>
+                <li>Structured descriptions</li>
+            </ul>
+        </div>
+        <div class="prov-card">
+            <div class="pi"><i class="fa fa-server"></i></div>
+            <h4>AnythingLLM</h4>
+            <span class="prov-badge free">Free</span>
+            <ul>
+                <li>Local AI deployment</li>
+                <li>No cloud dependency</li>
+                <li>Greater privacy &amp; control</li>
+                <li>Cost-effective for small biz</li>
+            </ul>
+        </div>
+    </div>
+    <p style="margin-top:14px;">This multi-provider flexibility ensures you are never locked into a single AI system.</p>
+
+    <!-- 4b. Content Types -->
+    <div class="sub-heading"><i class="fa fa-layer-group"></i> Works on All Major Content Types</div>
+    <div class="ct-grid">
+        <div class="ct-pill"><div class="ct-emoji">🛒</div><h4>Products</h4><p>Short &amp; long desc</p></div>
+        <div class="ct-pill"><div class="ct-emoji">📝</div><h4>Blog Posts</h4><p>Blog content</p></div>
+        <div class="ct-pill"><div class="ct-emoji">📰</div><h4>News Items</h4><p>News descriptions</p></div>
+        <div class="ct-pill"><div class="ct-emoji">📄</div><h4>Topic Pages</h4><p>Topic body</p></div>
+        <div class="ct-pill"><div class="ct-emoji">🏷️</div><h4>Meta Title</h4><p>SEO page titles</p></div>
+        <div class="ct-pill"><div class="ct-emoji">🔑</div><h4>Meta Keywords</h4><p>Search keywords</p></div>
+        <div class="ct-pill"><div class="ct-emoji">📋</div><h4>Meta Desc</h4><p>SERP snippets</p></div>
+    </div>
+    <p style="margin-top:14px;">Meta tag generation works globally across all four content types when enabled in the configuration. Each field can be enabled or disabled independently.</p>
+
+    <!-- 4c. Customize AI Query Popup -->
+    <div class="sub-heading"><i class="fa fa-window-restore"></i> New "Customize AI Query" Popup Window</div>
+    <div class="popup-row">
+        <div class="popup-img">
+            <img src="/images/uploaded/ProductDetail/ChatGpt/customize_window.png" alt="Customize AI Query Popup" loading="lazy" />
+        </div>
+        <div class="popup-info">
+            <h3>Full Control Before Generation</h3>
+            <p style="font-size:13.5px;margin-bottom:12px;">When you click "Generate Using AI", a popup opens where you can fine-tune:</p>
+            <ul class="popup-fields">
+                <li><i class="fa fa-tag"></i> Name (auto-filled, editable)</li>
+                <li><i class="fa fa-language"></i> Language Selection</li>
+                <li><i class="fa fa-key"></i> Key Features &amp; Keywords</li>
+                <li><i class="fa fa-text-width"></i> Word Limit</li>
+                <li><i class="fa fa-microphone"></i> Tone of Voice</li>
+                <li><i class="fa fa-pen-fancy"></i> Custom Tone of Voice</li>
+                <li><i class="fa fa-clipboard-list"></i> Special Instructions</li>
+            </ul>
+        </div>
+    </div>
+    <p style="margin-top:14px;">All values are combined with the <strong>configured prompt from the Configure page</strong>. The complete prompt (with tokens) is sent to the selected AI provider. The AI generates content strictly based on the configured prompt, selected provider, and popup values — ensuring accurate, contextual, and brand-aligned results.</p>
+
+    <!-- 4d. Language -->
+    <div class="sub-heading"><i class="fa fa-globe"></i> Language-Based Generation</div>
+    <p>Content is generated in the <strong>same language selected in the popup</strong>. Meta Tags (Meta Titles, Meta Keywords, Meta Description) are also generated in the selected language, ensuring multilingual SEO support and consistency across your store.</p>
+
+    <!-- 4e. Version Support -->
+    <div class="sub-heading"><i class="fa fa-code-branch"></i> Expanded nopCommerce Version Support</div>
+    <div class="ver-badges">
+        <span class="ver-badge">nopCommerce 4.6</span>
+        <span class="ver-badge">nopCommerce 4.7</span>
+        <span class="ver-badge">nopCommerce 4.8</span>
+        <span class="ver-badge">nopCommerce 4.9</span>
+    </div>
+    <p>This ensures smooth performance on all modern nopCommerce setups.</p>
+
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     5. HOW THE PLUGIN WORKS
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-gears"></i></div>
+        <h2>How the Plugin Works</h2>
+    </div>
+    <p>The ChatGPTAIExtension Plugin works through a simple and structured configuration process inside the nopCommerce admin panel.</p>
+    <ol class="steps">
+        <li>
+            <div class="sc">
+                <strong>Enable the Plugin</strong>
+                <span>Go to the Configure page and enable using the <strong>"Enable AI-Powered Services"</strong> checkbox.</span>
+            </div>
+        </li>
+        <li>
+            <div class="sc">
+                <strong>Select Provider &amp; Enter API Key</strong>
+                <span>Choose your AI provider (Azure OpenAI, ChatGPT, DeepSeek, Gemini, or AnythingLLM) and enter the required API Key. Save the settings.</span>
+            </div>
+        </li>
+        <li>
+            <div class="sc">
+                <strong>Enable Content Sections</strong>
+                <span>Enable checkboxes for Product / Blog / News / Topic Description, Meta Title, Meta Keywords, and Meta Description generation.</span>
+            </div>
+        </li>
+        <li>
+            <div class="sc">
+                <strong>Click "Generate Using AI"</strong>
+                <span>On any Product, Blog, News, or Topic page, click the button. The Customize Query popup opens where you enter language, keywords, word limit, tone, and special instructions.</span>
+            </div>
+        </li>
+        <li>
+            <div class="sc">
+                <strong>AI Processes &amp; Returns Content</strong>
+                <span>Your entered values are sent as tokens along with the configured prompt to the selected AI provider. It returns a high-quality, SEO-optimized description instantly.</span>
+            </div>
+        </li>
+        <li>
+            <div class="sc">
+                <strong>Meta Tags Generated Automatically</strong>
+                <span>Enabling Meta fields allows automatic generation for all four content types. Meta generation works after the page is saved and contains sufficient description content.</span>
+            </div>
+        </li>
+    </ol>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     6. WHO WILL BENEFIT
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-users"></i></div>
+        <h2>Who Will Benefit from This Plugin</h2>
+    </div>
+    <p>The ChatGPTAIExtension Plugin is designed for every nopCommerce store owner who wants to save time, improve SEO, and maintain professional content. Here's who benefits the most:</p>
+    <div class="who-grid">
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-store"></i></div>
+            <div>
+                <h4>Small Business Owners</h4>
+                <p>Generate product descriptions, blog content, and meta tags without hiring dedicated content writers. Save time and reduce operational costs.</p>
+            </div>
+        </div>
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-building"></i></div>
+            <div>
+                <h4>Large eCommerce Stores</h4>
+                <p>Manage hundreds or thousands of products with consistent, high-quality AI-generated content while maintaining brand tone across all pages.</p>
+            </div>
+        </div>
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-bullhorn"></i></div>
+            <div>
+                <h4>Marketing Teams</h4>
+                <p>Focus on campaigns, promotions, and growth strategies instead of spending hours writing repetitive descriptions and SEO metadata.</p>
+            </div>
+        </div>
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-magnifying-glass-chart"></i></div>
+            <div>
+                <h4>SEO Specialists</h4>
+                <p>Quickly generate optimized Meta Titles, Meta Keywords, and Meta Descriptions to improve search engine rankings and click-through rates.</p>
+            </div>
+        </div>
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-pen-to-square"></i></div>
+            <div>
+                <h4>Content Managers</h4>
+                <p>Maintain structured, professional, and consistent content for Products, Topics, News Items, and Blog Posts from one centralized system.</p>
+            </div>
+        </div>
+        <div class="who-card">
+            <div class="wi"><i class="fa fa-code"></i></div>
+            <div>
+                <h4>Agencies &amp; Developers</h4>
+                <p>Provide AI-powered automation solutions to clients using nopCommerce, increasing project efficiency and value.</p>
+            </div>
+        </div>
+    </div>
+    <p style="margin-top:16px;">Whether you run a small online store or manage a large-scale eCommerce platform, this plugin simplifies content creation, improves productivity, and enhances overall store performance.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     7. KEY FEATURES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-bolt"></i></div>
+        <h2>Key Features That Make It Essential</h2>
+    </div>
+    <p>The ChatGPTAIExtension Plugin is more than just a content generator — it is a complete AI-powered content automation system for nopCommerce:</p>
+    <div class="feat-grid">
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-robot"></i></div>
+            <div>
+                <h4>Multi-Provider AI Support</h4>
+                <p>Choose from Azure OpenAI, ChatGPT, Gemini, DeepSeek, or AnythingLLM based on your needs, budget, and privacy requirements.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-layer-group"></i></div>
+            <div>
+                <h4>Full Content Coverage</h4>
+                <p>Generate AI content for Products, Blog Posts, News Items, and Topic Pages — all from within the nopCommerce admin panel.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-tags"></i></div>
+            <div>
+                <h4>Automated Meta Tag Generation</h4>
+                <p>Create SEO-optimized Meta Titles, Meta Keywords, and Meta Descriptions that work across all supported pages.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-sliders"></i></div>
+            <div>
+                <h4>Global Configuration Control</h4>
+                <p>Enable or disable content generation for each section directly from the Configure page for complete control over AI usage.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-pen-nib"></i></div>
+            <div>
+                <h4>Customizable AI Prompts</h4>
+                <p>Each content type has its own prompt field to define tone, structure, and writing style according to your brand voice.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-window-maximize"></i></div>
+            <div>
+                <h4>Smart AI Query Popup</h4>
+                <p>Before generating, define language, keywords, word limit, tone, and instructions for precise, targeted results.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-file-code"></i></div>
+            <div>
+                <h4>Default &amp; Custom Prompts</h4>
+                <p>The system provides a default AI prompt which can be modified anytime to match your content strategy.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-copy"></i></div>
+            <div>
+                <h4>Save &amp; Copy Flexibility</h4>
+                <p>Replace existing content instantly or copy the generated HTML content manually without overwriting.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-shield-halved"></i></div>
+            <div>
+                <h4>Secure API Integration</h4>
+                <p>Simple provider selection and API key configuration ensure secure and reliable AI communication.</p>
+            </div>
+        </div>
+        <div class="feat-card">
+            <div class="fi"><i class="fa fa-code-branch"></i></div>
+            <div>
+                <h4>Version Compatibility</h4>
+                <p>Fully compatible with nopCommerce 4.6, 4.7, 4.8, and 4.9 for smooth performance on all modern setups.</p>
+            </div>
+        </div>
+    </div>
+    <p style="margin-top:16px;">With powerful automation, flexible configuration, and enterprise-level AI integration, this plugin becomes an essential tool for scaling content efficiently while maintaining quality and SEO performance.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     8. REAL-WORLD USE CASES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-briefcase"></i></div>
+        <h2>Real-World Use Cases</h2>
+    </div>
+    <p>The ChatGPTAIExtension Plugin solves practical, everyday challenges faced by nopCommerce store owners:</p>
+    <div class="uc-grid">
+        <div class="uc-card">
+            <div class="uc-em">🚀</div>
+            <h4>New Product Launches</h4>
+            <p>Instantly generate descriptions &amp; SEO meta tags when adding new products.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">📦</div>
+            <h4>Bulk Catalog Expansion</h4>
+            <p>Generate consistent content for dozens or hundreds of products at once.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">🔍</div>
+            <h4>SEO Optimization Projects</h4>
+            <p>Regenerate meta titles, keywords, and descriptions to improve rankings.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">🔄</div>
+            <h4>Store Migration or Redesign</h4>
+            <p>Quickly rewrite &amp; standardize content to match your new brand voice.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">🎉</div>
+            <h4>Seasonal Campaigns</h4>
+            <p>Update descriptions &amp; blog content for festive offers and special events.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">✨</div>
+            <h4>Content Refresh</h4>
+            <p>Modernize outdated descriptions to improve clarity and conversions.</p>
+        </div>
+        <div class="uc-card">
+            <div class="uc-em">📝</div>
+            <h4>Blog &amp; News Creation</h4>
+            <p>Create informative blog posts and news updates to boost website authority.</p>
+        </div>
+    </div>
+    <p style="margin-top:16px;">Whether you manage a small store or a large-scale platform, the plugin helps streamline content creation, maintain consistency, and scale efficiently.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     9. CUSTOMER EXPERIENCE
+     ═════════���═════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <div class="ic"><i class="fa fa-heart"></i></div>
+        <h2>How the Plugin Enhances Customer Experience</h2>
+    </div>
+    <p>AI-generated content doesn't just simplify store management — it significantly improves the overall customer experience:</p>
+    <ul class="cx-list">
+        <li>
+            <i class="fa fa-circle-info"></i>
+            <div><strong>Clear and Informative Content:</strong> Customers quickly understand product features, specifications, and benefits without confusion.</div>
+        </li>
+        <li>
+            <i class="fa fa-fire"></i>
+            <div><strong>Engaging and Persuasive Descriptions:</strong> Well-structured content keeps shoppers interested and encourages them to explore further.</div>
+        </li>
+        <li>
+            <i class="fa fa-palette"></i>
+            <div><strong>Consistent Brand Voice:</strong> Uniform tone across products, blogs, news, and topic pages builds strong brand identity and professionalism.</div>
+        </li>
+        <li>
+            <i class="fa fa-magnifying-glass"></i>
+            <div><strong>Better Search Visibility:</strong> SEO-optimized meta titles, keywords, and descriptions help customers easily discover your store through search engines.</div>
+        </li>
+        <li>
+            <i class="fa fa-bolt"></i>
+            <div><strong>Faster Decision-Making:</strong> Complete and accurate information reduces hesitation and helps customers make confident purchase decisions.</div>
+        </li>
+    </ul>
+    <p style="margin-top:14px;">By delivering structured, optimized, and high-quality content across all pages, the plugin ensures a smoother and more satisfying shopping journey.</p>
+    <div class="div-cta"><a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     10. CONCLUSION BANNER
+     ═══════════════════════════════════════════════════════════ -->
+<div class="fd-conclusion">
+    <h2>A Must-Have Tool for Modern nopCommerce Stores</h2>
+    <p>The ChatGPTAIExtension Plugin is a powerful and practical solution for automating content creation while maintaining full administrative control. From simple configuration and AI provider selection to customizable prompts and one-click content generation, the plugin ensures a smooth and efficient workflow.</p>
+    <p>It supports product pages, blog posts, news items, and topic pages, along with Meta Titles, Meta Keywords, and Meta Description generation for complete SEO optimization. By combining flexibility, smart automation, and easy configuration, the plugin helps store owners save time, improve content quality, and scale their nopCommerce store with confidence.</p>
+    <a href="/chatgptaiextension-plugin" class="cta-btn">GET IT NOW</a>
+</div>
+
+
+</div><!-- /.page-wrap -->
+
+</body>
+</html>

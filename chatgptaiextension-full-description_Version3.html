@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPTAI Extension Plugin – Full Description</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           nopCommerce Brand Tokens
+           ============================================================ */
+        :root {
+            --nop-primary:      #38C3DB;
+            --nop-primary-dk:   #1b8fa8;
+            --nop-dark:         #313131;
+            --nop-text:         #4a4a4a;
+            --nop-light-bg:     #f5f9fb;
+            --nop-white:        #ffffff;
+            --nop-border:       #e4e9ed;
+            --nop-accent:       #4753cb;
+            --nop-cta:          #fb6060;
+            --nop-cta-hover:    #e04545;
+            --nop-green:        #27ae60;
+            --nop-gradient:     linear-gradient(135deg, #38C3DB 0%, #1b8fa8 100%);
+            --nop-gradient-alt: linear-gradient(135deg, #4753cb 0%, #38C3DB 100%);
+            --nop-radius:       10px;
+            --nop-shadow:       0 4px 24px rgba(0,0,0,.07);
+            --nop-shadow-lg:    0 8px 40px rgba(0,0,0,.10);
+            --nop-font:         'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: var(--nop-font);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--nop-text);
+            background: var(--nop-light-bg);
+            -webkit-font-smoothing: antialiased;
+            margin: 0; padding: 0;
+        }
+
+        /* ============================================================
+           Tab Navigation (clanstech-button style)
+           ============================================================ */
+        .nop-tabs-nav {
+            max-width: 1000px;
+            margin: 30px auto 0;
+            padding: 0 16px;
+        }
+
+        .nop-tabs-nav .nav-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border: none;
+            padding: 0;
+        }
+
+        .nop-tabs-nav .nav-pills .nav-link {
+            background: var(--nop-white);
+            color: var(--nop-dark);
+            border: 2px solid var(--nop-border);
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            transition: all .25s ease;
+            cursor: pointer;
+        }
+
+        .nop-tabs-nav .nav-pills .nav-link:hover {
+            border-color: var(--nop-primary);
+            color: var(--nop-primary);
+            background: #edf9fc;
+        }
+
+        .nop-tabs-nav .nav-pills .nav-link.active {
+            background: var(--nop-gradient);
+            color: var(--nop-white);
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(56,195,219,.3);
+        }
+
+        /* ============================================================
+           Tab Content Wrapper
+           ============================================================ */
+        .nop-tab-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 16px 40px;
+        }
+
+        .nop-tab-pane {
+            display: none;
+            animation: fadeIn .35s ease;
+        }
+
+        .nop-tab-pane.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           Hero Banner
+           ============================================================ */
+        .fd-hero {
+            background: var(--nop-gradient-alt);
+            border-radius: 0 0 var(--nop-radius) var(--nop-radius);
+            padding: 52px 40px 44px;
+            color: var(--nop-white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--nop-shadow-lg);
+            margin-bottom: 28px;
+        }
+
+        .fd-hero::before {
+            content: '';
+            position: absolute;
+            width: 380px; height: 380px;
+            background: rgba(255,255,255,.06);
+            border-radius: 50%;
+            top: -140px; right: -100px;
+        }
+
+        .fd-hero::after {
+            content: '';
+            position: absolute;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,.05);
+            border-radius: 50%;
+            bottom: -80px; left: -50px;
+        }
+
+        .fd-hero h1 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative; z-index: 1;
+        }
+
+        .fd-hero .fd-hero-sub {
+            font-size: 15.5px;
+            opacity: .93;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative; z-index: 1;
+            line-height: 1.6;
+        }
+
+        .fd-hero .fd-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            position: relative; z-index: 1;
+        }
+
+        .fd-hero .fd-badge {
+            display: inline-block;
+            background: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+           Section Cards
+           ============================================================ */
+        .fd-section {
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: var(--nop-radius);
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            box-shadow: var(--nop-shadow);
+            transition: box-shadow .25s ease;
+        }
+
+        .fd-section:hover {
+            box-shadow: var(--nop-shadow-lg);
+        }
+
+        .fd-section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .fd-section-header .fd-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            background: var(--nop-gradient);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .fd-section-header h2 {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0;
+        }
+
+        /* ============================================================
+           AI Provider Cards
+           ============================================================ */
+        .fd-providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .fd-provider-card {
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: transform .2s, box-shadow .2s, border-color .2s;
+            position: relative;
+        }
+
+        .fd-provider-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(56,195,219,.15);
+            border-color: var(--nop-primary);
+        }
+
+        .fd-provider-card .prov-icon {
+            width: 48px; height: 48px;
+            background: var(--nop-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin: 0 auto 10px;
+            color: #fff;
+        }
+
+        .fd-provider-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin-bottom: 4px;
+        }
+
+        .fd-provider-card .prov-type {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .prov-type.paid {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+
+        .prov-type.free {
+            background: #e8f5e9;
+            color: #27ae60;
+        }
+
+        .fd-provider-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .fd-provider-card ul li {
+            font-size: 12px;
+            color: var(--nop-text);
+            padding: 2px 0;
+        }
+
+        .fd-provider-card ul li::before {
+            content: '✓ ';
+            color: var(--nop-primary);
+            font-weight: 700;
+        }
+
+        /* ============================================================
+           Content Type Cards
+           ============================================================ */
+        .fd-content-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .fd-ctype-card {
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            padding: 22px 18px;
+            text-align: center;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .fd-ctype-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(71,83,203,.12);
+        }
+
+        .fd-ctype-card .ct-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .fd-ctype-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0;
+        }
+
+        .fd-ctype-card p {
+            font-size: 12.5px;
+            color: var(--nop-text);
+            margin: 4px 0 0;
+        }
+
+        /* ============================================================
+           Feature Grid (Key Features)
+           ============================================================ */
+        .fd-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        .fd-feature-card {
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            padding: 22px 20px;
+            transition: transform .2s, box-shadow .2s;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .fd-feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(56,195,219,.14);
+        }
+
+        .fd-feature-card .fc-icon {
+            width: 44px; height: 44px;
+            min-width: 44px;
+            background: var(--nop-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .fd-feature-card h3 {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0 0 4px;
+        }
+
+        .fd-feature-card p {
+            font-size: 13px;
+            color: var(--nop-text);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           Popup Feature Highlight
+           ============================================================ */
+        .fd-popup-highlight {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 16px;
+            align-items: center;
+        }
+
+        .fd-popup-highlight .popup-img {
+            flex: 1 1 380px;
+            min-width: 280px;
+        }
+
+        .fd-popup-highlight .popup-img img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--nop-border);
+            box-shadow: 5px 5px 15px 5px #ccc;
+        }
+
+        .fd-popup-highlight .popup-details {
+            flex: 1 1 320px;
+            min-width: 260px;
+        }
+
+        .fd-popup-highlight .popup-details h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin-bottom: 10px;
+        }
+
+        .fd-popup-fields {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fd-popup-fields li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--nop-dark);
+        }
+
+        .fd-popup-fields li i {
+            color: var(--nop-primary);
+            font-size: 16px;
+            width: 22px;
+            text-align: center;
+        }
+
+        /* ============================================================
+           Benefits Row
+           ============================================================ */
+        .fd-benefits {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .fd-benefits li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 18px;
+            background: var(--nop-light-bg);
+            border-radius: 10px;
+            border-left: 4px solid var(--nop-primary);
+            font-size: 14px;
+        }
+
+        .fd-benefits li i {
+            color: var(--nop-green);
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .fd-benefits li strong {
+            color: var(--nop-dark);
+        }
+
+        /* ============================================================
+           How It Works Steps
+           ============================================================ */
+        .fd-steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            position: relative;
+        }
+
+        .fd-steps::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 18px;
+            bottom: 18px;
+            width: 2px;
+            background: var(--nop-border);
+        }
+
+        .fd-steps li {
+            counter-increment: step;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 16px 0;
+            position: relative;
+        }
+
+        .fd-steps li::before {
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            min-width: 40px;
+            background: var(--nop-gradient);
+            color: #fff;
+            font-weight: 800;
+            font-size: 16px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 2px 10px rgba(56,195,219,.3);
+        }
+
+        .fd-steps li .step-content { padding-top: 6px; }
+
+        .fd-steps li .step-content strong {
+            display: block;
+            color: var(--nop-dark);
+            font-size: 15.5px;
+            margin-bottom: 3px;
+        }
+
+        .fd-steps li .step-content span {
+            font-size: 13.5px;
+            color: var(--nop-text);
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           Use Cases Cards
+           ============================================================ */
+        .fd-usecases {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .fd-usecase-card {
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: transform .2s, border-color .2s;
+        }
+
+        .fd-usecase-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--nop-accent);
+        }
+
+        .fd-usecase-card .uc-icon {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .fd-usecase-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0 0 4px;
+        }
+
+        .fd-usecase-card p {
+            font-size: 12.5px;
+            color: var(--nop-text);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ============================================================
+           Who Benefits Grid
+           ============================================================ */
+        .fd-who-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .fd-who-card {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 18px;
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            transition: box-shadow .2s;
+        }
+
+        .fd-who-card:hover {
+            box-shadow: 0 4px 16px rgba(71,83,203,.1);
+        }
+
+        .fd-who-card .who-icon {
+            width: 42px; height: 42px;
+            min-width: 42px;
+            background: var(--nop-gradient-alt);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .fd-who-card h4 {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0 0 3px;
+        }
+
+        .fd-who-card p {
+            font-size: 12.5px;
+            color: var(--nop-text);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           Customer Experience
+           ============================================================ */
+        .fd-cx-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0;
+        }
+
+        .fd-cx-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--nop-border);
+        }
+
+        .fd-cx-list li:last-child { border-bottom: none; }
+
+        .fd-cx-list li i {
+            color: var(--nop-accent);
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .fd-cx-list li strong {
+            color: var(--nop-dark);
+        }
+
+        /* ============================================================
+           Info Bar (Version / Specs)
+           ============================================================ */
+        .fd-info-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .fd-info-card {
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: var(--nop-radius);
+            padding: 20px 22px;
+            text-align: center;
+            box-shadow: var(--nop-shadow);
+        }
+
+        .fd-info-card .ic-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .fd-info-card .ic-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--nop-dark);
+        }
+
+        .fd-info-card .ic-value a {
+            color: var(--nop-primary);
+            text-decoration: none;
+        }
+
+        .fd-info-card .ic-value a:hover {
+            text-decoration: underline;
+        }
+
+        .ic-value.free-price {
+            color: var(--nop-green) !important;
+            font-size: 20px;
+        }
+
+        /* ============================================================
+           CTA Button
+           ============================================================ */
+        .fd-cta {
+            text-align: center;
+            margin: 32px 0 8px;
+        }
+
+        .fd-cta a.cta-btn {
+            display: inline-block;
+            background: var(--nop-cta);
+            color: var(--nop-white);
+            font-size: 16px;
+            font-weight: 700;
+            padding: 14px 44px;
+            border-radius: 0;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            border: 1px solid var(--nop-cta);
+            box-shadow: 0 4px 16px rgba(251,96,96,.3);
+            transition: all .2s ease;
+        }
+
+        .fd-cta a.cta-btn:hover {
+            background: var(--nop-cta-hover);
+            border-color: var(--nop-cta-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(251,96,96,.4);
+        }
+
+        .fd-cta .cta-sub {
+            display: block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ============================================================
+           Section Divider with CTA
+           ============================================================ */
+        .fd-section-cta {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--nop-border);
+        }
+
+        /* ============================================================
+           Accordion Styles
+           ============================================================ */
+        .fd-accordion {
+            margin-top: 10px;
+        }
+
+        .fd-acc-item {
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: var(--nop-white);
+            transition: box-shadow .2s;
+        }
+
+        .fd-acc-item:hover {
+            box-shadow: var(--nop-shadow);
+        }
+
+        .fd-acc-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            background: var(--nop-white);
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: var(--nop-font);
+            transition: background .2s;
+        }
+
+        .fd-acc-header:hover {
+            background: var(--nop-light-bg);
+        }
+
+        .fd-acc-header .acc-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            min-width: 32px;
+            background: var(--nop-gradient);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .fd-acc-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0;
+            flex: 1;
+        }
+
+        .fd-acc-header .acc-chevron {
+            color: var(--nop-primary);
+            font-size: 14px;
+            transition: transform .3s;
+        }
+
+        .fd-acc-item.open .acc-chevron {
+            transform: rotate(180deg);
+        }
+
+        .fd-acc-body {
+            display: none;
+            padding: 0 20px 20px;
+        }
+
+        .fd-acc-item.open .fd-acc-body {
+            display: block;
+        }
+
+        /* ============================================================
+           Features Tab (checklist)
+           ============================================================ */
+        .fd-feature-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: 8px;
+            transition: box-shadow .2s;
+        }
+
+        .fd-feature-check:hover {
+            box-shadow: var(--nop-shadow);
+        }
+
+        .fd-feature-check i {
+            color: var(--nop-accent);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .fd-feature-check strong {
+            color: var(--nop-dark);
+        }
+
+        /* ============================================================
+           Specs Table
+           ============================================================ */
+        .fd-spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .fd-spec-table tr {
+            border-bottom: 1px solid var(--nop-border);
+        }
+
+        .fd-spec-table tr:last-child { border-bottom: none; }
+
+        .fd-spec-table td {
+            padding: 12px 16px;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .fd-spec-table td:first-child {
+            font-weight: 700;
+            color: var(--nop-dark);
+            width: 40%;
+        }
+
+        .fd-spec-table td:last-child {
+            color: var(--nop-text);
+        }
+
+        .fd-spec-table .spec-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px 4px 2px 0;
+        }
+
+        .spec-badge.ver {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .spec-badge.prov {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* ============================================================
+           FAQ Grid
+           ============================================================ */
+        .fd-faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .fd-faq-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 18px;
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            transition: box-shadow .2s;
+        }
+
+        .fd-faq-item:hover {
+            box-shadow: var(--nop-shadow);
+        }
+
+        .fd-faq-item i {
+            color: var(--nop-accent);
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .fd-faq-item h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin: 0 0 4px;
+        }
+
+        .fd-faq-item p {
+            font-size: 13px;
+            color: var(--nop-text);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           Release Notes
+           ============================================================ */
+        .fd-release {
+            margin-top: 10px;
+        }
+
+        .fd-release-version {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--nop-dark);
+            margin-bottom: 4px;
+        }
+
+        .fd-release-subtitle {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            border-bottom: 2px solid var(--nop-border);
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+
+        .fd-release h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--nop-accent);
+            margin: 16px 0 8px;
+        }
+
+        .fd-release ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .fd-release ul li {
+            padding: 3px 0;
+            font-size: 14px;
+            color: var(--nop-text);
+        }
+
+        /* ============================================================
+           Support Tab
+           ============================================================ */
+        .fd-support-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .fd-support-item {
+            flex: 1 1 280px;
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: 10px;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: var(--nop-shadow);
+            transition: box-shadow .2s;
+        }
+
+        .fd-support-item:hover {
+            box-shadow: var(--nop-shadow-lg);
+        }
+
+        .fd-support-item i {
+            font-size: 32px;
+            color: var(--nop-primary);
+            margin-bottom: 12px;
+        }
+
+        .fd-support-item h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin-bottom: 8px;
+        }
+
+        .fd-support-item p {
+            font-size: 13.5px;
+            color: var(--nop-text);
+            margin-bottom: 14px;
+        }
+
+        .fd-support-item a.support-btn {
+            display: inline-block;
+            padding: 10px 28px;
+            background: var(--nop-gradient);
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: box-shadow .2s;
+        }
+
+        .fd-support-item a.support-btn:hover {
+            box-shadow: 0 4px 16px rgba(56,195,219,.35);
+        }
+
+        /* ============================================================
+           Conclusion Banner
+           ============================================================ */
+        .fd-conclusion {
+            background: var(--nop-gradient);
+            border-radius: var(--nop-radius);
+            padding: 36px 32px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .fd-conclusion h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .fd-conclusion p {
+            font-size: 14.5px;
+            opacity: .95;
+            max-width: 680px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+        }
+
+        .fd-conclusion a.cta-btn {
+            background: #fff;
+            color: var(--nop-cta);
+            border: none;
+        }
+
+        .fd-conclusion a.cta-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* ============================================================
+           Responsive
+           ============================================================ */
+        @media (max-width: 768px) {
+            .fd-hero { padding: 36px 20px 30px; }
+            .fd-hero h1 { font-size: 24px; }
+            .fd-section { padding: 24px 20px; }
+            .fd-features-grid { grid-template-columns: 1fr; }
+            .fd-providers-grid { grid-template-columns: repeat(2, 1fr); }
+            .fd-benefits { grid-template-columns: 1fr; }
+            .fd-info-bar { grid-template-columns: repeat(2, 1fr); }
+            .fd-faq-grid { grid-template-columns: 1fr; }
+            .fd-popup-highlight { flex-direction: column; }
+            .fd-who-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .fd-providers-grid { grid-template-columns: 1fr; }
+            .fd-info-bar { grid-template-columns: 1fr; }
+            .nop-tabs-nav .nav-pills .nav-link {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================================================================
+     TAB NAVIGATION
+     ================================================================ -->
+<nav class="nop-tabs-nav">
+    <div class="nav nav-pills" id="nop-nav-tab">
+        <a href="#" class="nav-item nav-link active" data-tab="tab-description">Description</a>
+        <a href="#" class="nav-item nav-link" data-tab="tab-features">Features</a>
+        <a href="#" class="nav-item nav-link" data-tab="tab-specifications">Specifications</a>
+        <a href="#" class="nav-item nav-link" data-tab="tab-support">Support</a>
+        <a href="#" class="nav-item nav-link" data-tab="tab-release-notes">Release Notes</a>
+        <a href="#" class="nav-item nav-link" data-tab="tab-faq">FAQ</a>
+    </div>
+</nav>
+
+<hr style="max-width:1000px; margin:0 auto;" />
+
+<!-- ================================================================
+     TAB CONTENT
+     ================================================================ -->
+<div class="nop-tab-content">
+
+
+<!-- ============================================================
+     TAB 1: DESCRIPTION
+     ============================================================ -->
+<div id="tab-description" class="nop-tab-pane active">
+
+    <!-- HERO -->
+    <div class="fd-hero">
+        <div class="fd-badges">
+            <span class="fd-badge">5 AI Providers</span>
+            <span class="fd-badge">Products • Blogs • News • Topics</span>
+            <span class="fd-badge">nopCommerce 4.6 – 4.9</span>
+        </div>
+        <h1>ChatGPTAI Extension Plugin</h1>
+        <p class="fd-hero-sub">
+            A powerful AI-driven content generation solution supporting 5 AI models — Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AnythingLLM. Automatically creates SEO-friendly descriptions, meta tags, and professional content across your entire nopCommerce store.
+        </p>
+    </div>
+
+    <!-- ACCORDION SECTIONS -->
+    <div class="fd-accordion">
+
+        <!-- 1. Why Product Descriptions Matter -->
+        <div class="fd-acc-item open">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">1</span>
+                <h3>Why Product Descriptions Can Make or Break Your Online Store</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <p>In today's competitive eCommerce market, high-quality content is no longer optional — it is essential. Every product description, blog post, news item, and topic page plays a critical role in attracting visitors, improving search engine rankings, and converting customers.</p>
+                <p>For nopCommerce store owners, managing content manually can quickly become overwhelming. Writing SEO-optimized product descriptions, generating meta tags, and maintaining consistent brand tone across hundreds of pages takes time and effort.</p>
+                <p>That's where the <strong>ChatGPTAIExtension Plugin for nopCommerce</strong> becomes a game-changing solution.</p>
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-size:15px;text-transform:uppercase;border:1px solid #fb6060;">GET IT NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Why Content Quality Matters -->
+        <div class="fd-acc-item">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">2</span>
+                <h3>Why Content Quality Matters in nopCommerce</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <p>Search engines rank websites based on content relevance, keyword optimization, and user engagement. Poorly written or duplicated descriptions can harm your rankings and reduce customer trust.</p>
+                <p>Strong content helps you:</p>
+                <ul class="fd-benefits" style="margin-top:10px;">
+                    <li><i class="fa fa-check-circle"></i><div><strong>Improve organic search visibility</strong></div></li>
+                    <li><i class="fa fa-check-circle"></i><div><strong>Increase click-through rates (CTR)</strong></div></li>
+                    <li><i class="fa fa-check-circle"></i><div><strong>Build brand credibility</strong></div></li>
+                    <li><i class="fa fa-check-circle"></i><div><strong>Enhance customer experience</strong></div></li>
+                    <li><i class="fa fa-check-circle"></i><div><strong>Boost conversion rates</strong></div></li>
+                </ul>
+                <p style="margin-top:16px;">However, scaling high-quality content across product pages, blog posts, news items, and topic pages is one of the biggest challenges for growing eCommerce businesses.</p>
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-size:15px;text-transform:uppercase;border:1px solid #fb6060;">GET IT NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Common Challenges -->
+        <div class="fd-acc-item">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">3</span>
+                <h3>The Common Challenges in eCommerce Content Creation</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <p>Creating content across all areas of an online store often becomes overwhelming. Here's why:</p>
+                <div class="fd-features-grid">
+                    <div class="fd-feature-card">
+                        <div class="fc-icon"><i class="fa fa-clock"></i></div>
+                        <div>
+                            <h3>Time-Consuming Writing</h3>
+                            <p>Writing descriptions, meta tags, keywords, and long-form content manually can take hours per product. Multiply this by thousands and it becomes unmanageable.</p>
+                        </div>
+                    </div>
+                    <div class="fd-feature-card">
+                        <div class="fc-icon"><i class="fa fa-shuffle"></i></div>
+                        <div>
+                            <h3>Inconsistent Tone & Style</h3>
+                            <p>Multiple writers or rushed writing leads to uneven tone, mismatched style, unclear messaging, and lower professionalism. This affects customer trust.</p>
+                        </div>
+                    </div>
+                    <div class="fd-feature-card">
+                        <div class="fc-icon"><i class="fa fa-triangle-exclamation"></i></div>
+                        <div>
+                            <h3>Missing Key Information</h3>
+                            <p>Manual content writing often results in missing specifications, unclear benefits, poor SEO, and incomplete product details — leading to lower conversions.</p>
+                        </div>
+                    </div>
+                    <div class="fd-feature-card">
+                        <div class="fc-icon"><i class="fa fa-chart-line"></i></div>
+                        <div>
+                            <h3>Poor Scalability</h3>
+                            <p>The larger the catalog, the harder it becomes to maintain consistency. Updating large numbers of descriptions or meta fields manually becomes nearly impossible.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-size:15px;text-transform:uppercase;border:1px solid #fb6060;">GET IT NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Introducing the Upgraded Plugin -->
+        <div class="fd-acc-item">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">4</span>
+                <h3>Introducing the Upgraded ChatGPTAIExtension Plugin</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <p>We're excited to announce a <strong>major upgrade</strong> to the <strong>ChatGPTAIExtension Plugin for nopCommerce</strong>! Previously, the plugin supported Azure OpenAI (paid) for AI-powered product descriptions. With this update, we've added <strong>new AI providers</strong> and features to give you more flexibility and control.</p>
+
+                <h4 style="margin-top:20px;font-size:17px;color:var(--nop-dark);"><i class="fa fa-bolt" style="color:var(--nop-primary);"></i> &nbsp;Support for 5 AI Providers</h4>
+                <div class="fd-providers-grid">
+                    <div class="fd-provider-card">
+                        <div class="prov-icon"><i class="fa fa-cloud"></i></div>
+                        <h4>Azure OpenAI</h4>
+                        <span class="prov-type paid">Paid</span>
+                        <ul>
+                            <li>Enterprise-grade performance</li>
+                            <li>High accuracy &amp; reliability</li>
+                            <li>Secure cloud infrastructure</li>
+                            <li>Ideal for large-scale stores</li>
+                        </ul>
+                    </div>
+                    <div class="fd-provider-card">
+                        <div class="prov-icon"><i class="fa fa-comments"></i></div>
+                        <h4>ChatGPT</h4>
+                        <span class="prov-type paid">Paid</span>
+                        <ul>
+                            <li>Natural, human-like language</li>
+                            <li>Marketing-focused content</li>
+                            <li>Engaging, persuasive tone</li>
+                            <li>Strong SEO-friendly writing</li>
+                        </ul>
+                    </div>
+                    <div class="fd-provider-card">
+                        <div class="prov-icon"><i class="fa fa-gem"></i></div>
+                        <h4>Gemini</h4>
+                        <span class="prov-type paid">Paid</span>
+                        <ul>
+                            <li>Fast response generation</li>
+                            <li>Optimized structured outputs</li>
+                            <li>Scalable content creation</li>
+                        </ul>
+                    </div>
+                    <div class="fd-provider-card">
+                        <div class="prov-icon"><i class="fa fa-brain"></i></div>
+                        <h4>DeepSeek</h4>
+                        <span class="prov-type paid">Paid</span>
+                        <ul>
+                            <li>Intelligent context understanding</li>
+                            <li>Strong long-form generation</li>
+                            <li>Structured descriptions</li>
+                        </ul>
+                    </div>
+                    <div class="fd-provider-card">
+                        <div class="prov-icon"><i class="fa fa-server"></i></div>
+                        <h4>AnythingLLM</h4>
+                        <span class="prov-type free">Free</span>
+                        <ul>
+                            <li>Local AI deployment</li>
+                            <li>No cloud dependency</li>
+                            <li>Greater privacy &amp; control</li>
+                            <li>Cost-effective for small biz</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 style="margin-top:28px;font-size:17px;color:var(--nop-dark);"><i class="fa fa-layer-group" style="color:var(--nop-primary);"></i> &nbsp;Works on All Major Content Types</h4>
+                <div class="fd-content-types">
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">🛒</div>
+                        <h4>Products</h4>
+                        <p>Short &amp; long descriptions</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">📝</div>
+                        <h4>Blog Posts</h4>
+                        <p>Engaging blog content</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">📰</div>
+                        <h4>News Items</h4>
+                        <p>News descriptions</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">📄</div>
+                        <h4>Topic Pages</h4>
+                        <p>Topic body content</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">🏷️</div>
+                        <h4>Meta Title</h4>
+                        <p>SEO page titles</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">🔑</div>
+                        <h4>Meta Keywords</h4>
+                        <p>Search keywords</p>
+                    </div>
+                    <div class="fd-ctype-card">
+                        <div class="ct-icon">📋</div>
+                        <h4>Meta Description</h4>
+                        <p>SERP snippets</p>
+                    </div>
+                </div>
+
+                <h4 style="margin-top:28px;font-size:17px;color:var(--nop-dark);"><i class="fa fa-window-restore" style="color:var(--nop-primary);"></i> &nbsp;New "Customize AI Query" Popup Window</h4>
+                <div class="fd-popup-highlight">
+                    <div class="popup-img">
+                        <img src="/images/uploaded/ProductDetail/ChatGpt/customize_window.png" alt="Customize AI Query Popup" loading="lazy" />
+                    </div>
+                    <div class="popup-details">
+                        <h3>Full Control Before Generation</h3>
+                        <p style="font-size:13.5px;margin-bottom:14px;">When you click "Generate Using AI", a popup opens where you can fine-tune every aspect:</p>
+                        <ul class="fd-popup-fields">
+                            <li><i class="fa fa-tag"></i> Name (auto-filled, editable)</li>
+                            <li><i class="fa fa-language"></i> Language Selection</li>
+                            <li><i class="fa fa-key"></i> Key Features &amp; Keywords</li>
+                            <li><i class="fa fa-text-width"></i> Word Limit</li>
+                            <li><i class="fa fa-microphone"></i> Tone of Voice (Supportive, Expert, Custom…)</li>
+                            <li><i class="fa fa-pen-fancy"></i> Custom Tone of Voice</li>
+                            <li><i class="fa fa-clipboard-list"></i> Special Instructions</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top:14px;">All values are combined with the <strong>configured prompt from the Configure page</strong>. The complete prompt (with tokens) is sent to the selected AI provider. This ensures accurate, contextual, and brand-aligned content generation.</p>
+
+                <h4 style="margin-top:24px;font-size:17px;color:var(--nop-dark);"><i class="fa fa-globe" style="color:var(--nop-primary);"></i> &nbsp;Language-Based Generation</h4>
+                <p>Content is generated in the <strong>same language selected in the popup</strong>. Meta Tags are also generated in the selected language, ensuring multilingual SEO support and consistency across your store.</p>
+
+                <h4 style="margin-top:24px;font-size:17px;color:var(--nop-dark);"><i class="fa fa-code-branch" style="color:var(--nop-primary);"></i> &nbsp;Expanded nopCommerce Version Support</h4>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                    <span class="spec-badge ver">nopCommerce 4.6</span>
+                    <span class="spec-badge ver">nopCommerce 4.7</span>
+                    <span class="spec-badge ver">nopCommerce 4.8</span>
+                    <span class="spec-badge ver">nopCommerce 4.9</span>
+                </div>
+                <p style="margin-top:10px;">This ensures smooth performance on all modern nopCommerce setups.</p>
+
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-size:15px;text-transform:uppercase;border:1px solid #fb6060;">GET IT NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. How the Plugin Works -->
+        <div class="fd-acc-item">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">5</span>
+                <h3>How the Plugin Works</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <p>The ChatGPTAIExtension Plugin works through a simple and structured configuration process inside the nopCommerce admin panel.</p>
+                <ol class="fd-steps">
+                    <li>
+                        <div class="step-content">
+                            <strong>Enable the Plugin</strong>
+                            <span>Go to the <em>Configure page</em> and enable the plugin using the <strong>"Enable AI-Powered Services"</strong> checkbox.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-content">
+                            <strong>Select Provider &amp; API Key</strong>
+                            <span>Select the provider (Azure OpenAI, ChatGPT, DeepSeek, Gemini, or AnythingLLM) and enter the required <strong>API Key</strong>. Save the settings.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-content">
+                            <strong>Enable Content Sections</strong>
+                            <span>Enable specific checkboxes: Allow to generate Product / Blog / News / Topic Description, Meta Title, Meta Keywords, Meta Description.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-content">
+                            <strong>Generate Content</strong>
+                            <span>Click <strong>"Generate Using AI"</strong> on any page to open the <strong>Customize Query popup</strong>. Enter language, keywords, word limit, tone, and instructions.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-content">
+                            <strong>AI Processes &amp; Returns Content</strong>
+                            <span>Values are sent with the configured prompt to the selected AI provider. It returns a high-quality, SEO-optimized description based on your inputs.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-content">
+                            <strong>Meta Tags Generated Automatically</strong>
+                            <span>Enabling Meta fields in configuration allows automatic generation for all four content types. Meta generation works after the page is saved with sufficient content.</span>
+                        </div>
+                    </li>
+                </ol>
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-size:15px;text-transform:uppercase;border:1px solid #fb6060;">GET IT NOW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Who Will Benefit -->
+        <div class="fd-acc-item">
+            <button class="fd-acc-header" onclick="toggleAcc(this)">
+                <span class="acc-num">6</span>
+                <h3>Who Will Benefit from This Plugin</h3>
+                <i class="fa fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="fd-acc-body">
+                <div class="fd-who-grid">
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-store"></i></div>
+                        <div>
+                            <h4>Small Business Owners</h4>
+                            <p>Generate product descriptions, blog content, and meta tags without hiring dedicated content writers. Save time and reduce costs.</p>
+                        </div>
+                    </div>
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-building"></i></div>
+                        <div>
+                            <h4>Large eCommerce Stores</h4>
+                            <p>Manage hundreds or thousands of products with consistent, high-quality AI-generated content while maintaining brand tone.</p>
+                        </div>
+                    </div>
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-bullhorn"></i></div>
+                        <div>
+                            <h4>Marketing Teams</h4>
+                            <p>Focus on campaigns, promotions, and growth strategies instead of spending hours writing repetitive descriptions and SEO metadata.</p>
+                        </div>
+                    </div>
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-search"></i></div>
+                        <div>
+                            <h4>SEO Specialists</h4>
+                            <p>Quickly generate optimized Meta Titles, Keywords, and Descriptions to improve search rankings and click-through rates.</p>
+                        </div>
+                    </div>
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-pen-to-square"></i></div>
+                        <div>
+                            <h4>Content Managers</h4>
+                            <p>Maintain structured, professional, and consistent content for Products, Topics, News Items, and Blog Posts from one centralized system.</p>
+                        </div>
+                    </div>
+                    <div class="fd-who-card">
+                        <div class="who-icon"><i class="fa fa-code"></i></div>
+                        <div>
+                            <h4>Agencies &amp; Developers</h4>
+                            <p>Provide AI-powered automation solutions to clients using nopCommerce, increasing project efficiency and value.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-section-cta">
+                    <a href="/chatgptaiextension-plugin" class="cta-btn" style="display:inline-block;background:#fb6060;color:#fff;padding:12px 32px;text-decoration:none;font-weight:700;font-

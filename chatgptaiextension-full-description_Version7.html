@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPTAI Extension Plugin — Clanstech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* ═══════════════════════════════════════════
+           CLANSTECH COLOR THEME
+           Primary:  #fb6060 (coral red — CTAs/accents)
+           Secondary:#2c2c3e (dark navy — headers)
+           Accent:   #4753cb (indigo — icons/highlights)
+           Support:  #38C3DB (teal — links/secondary)
+           ═══════════════════════════════════════════ */
+        :root {
+            --ct-red:       #fb6060;
+            --ct-red-dk:    #e04848;
+            --ct-navy:      #2c2c3e;
+            --ct-navy-lt:   #3a3a50;
+            --ct-indigo:    #4753cb;
+            --ct-teal:      #38C3DB;
+            --ct-teal-dk:   #1b8fa8;
+            --ct-dark:      #1e1e2d;
+            --ct-text:      #555;
+            --ct-text-lt:   #777;
+            --ct-heading:   #2c2c3e;
+            --ct-bg:        #f4f5f9;
+            --ct-bg-card:   #ffffff;
+            --ct-border:    #e2e4ec;
+            --ct-green:     #27ae60;
+            --ct-orange:    #e67e22;
+            --ct-grad:      linear-gradient(135deg, #2c2c3e 0%, #4753cb 100%);
+            --ct-grad-red:  linear-gradient(135deg, #fb6060 0%, #e04848 100%);
+            --ct-grad-teal: linear-gradient(135deg, #38C3DB 0%, #1b8fa8 100%);
+            --r:  10px;
+            --sh: 0 3px 18px rgba(0,0,0,.05);
+            --f:  'Segoe UI','Helvetica Neue',Arial,sans-serif;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:var(--f);font-size:14.5px;line-height:1.65;color:var(--ct-text);background:var(--ct-bg);-webkit-font-smoothing:antialiased}
+        .wrap{max-width:940px;margin:0 auto;padding:0 16px 48px}
+
+        /* ── Hero ─────────────────────────────────── */
+        .hero{background:var(--ct-grad);border-radius:0 0 12px 12px;padding:46px 32px 40px;color:#fff;text-align:center;position:relative;overflow:hidden;margin-bottom:26px}
+        .hero::before{content:'';position:absolute;width:360px;height:360px;background:rgba(251,96,96,.08);border-radius:50%;top:-140px;right:-100px}
+        .hero::after{content:'';position:absolute;width:200px;height:200px;background:rgba(56,195,219,.07);border-radius:50%;bottom:-80px;left:-50px}
+        .hero .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:16px;position:relative;z-index:1}
+        .hero .pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:4px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+        .hero h1{font-size:28px;font-weight:800;margin-bottom:10px;position:relative;z-index:1}
+        .hero h1 span{color:var(--ct-red)}
+        .hero .sub{font-size:14.5px;opacity:.9;max-width:680px;margin:0 auto;position:relative;z-index:1;line-height:1.62}
+
+        /* ── Section ──────────────────────────────── */
+        .sec{background:var(--ct-bg-card);border:1px solid var(--ct-border);border-radius:var(--r);padding:28px 30px;margin-bottom:22px;box-shadow:var(--sh)}
+        .sec-h{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+        .sec-h .ic{width:36px;height:36px;min-width:36px;background:var(--ct-grad-red);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+        .sec-h h2{font-size:19px;font-weight:700;color:var(--ct-heading);margin:0}
+        .sec p{margin-bottom:10px}
+
+        /* ── CTA ──────────────────────────────────── */
+        .cta-w{text-align:center;margin-top:18px}
+        a.cta{display:inline-block;background:var(--ct-red);color:#fff;padding:11px 36px;font-size:14px;font-weight:700;text-transform:uppercase;text-decoration:none;border:1px solid var(--ct-red);letter-spacing:.3px;transition:all .2s}
+        a.cta:hover{background:var(--ct-red-dk);border-color:var(--ct-red-dk);transform:translateY(-2px);box-shadow:0 6px 18px rgba(251,96,96,.3)}
+
+        /* ── Provider strip ───────────────────────── */
+        .prov-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+        .prov{background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;padding:14px 10px;text-align:center;transition:transform .2s,border-color .2s}
+        .prov:hover{transform:translateY(-3px);border-color:var(--ct-red)}
+        .prov .pi{width:38px;height:38px;background:var(--ct-grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;margin:0 auto 7px;color:#fff}
+        .prov h4{font-size:12.5px;font-weight:700;color:var(--ct-heading);margin:0 0 3px}
+        .prov .pb{font-size:9.5px;font-weight:700;text-transform:uppercase;padding:1px 8px;border-radius:8px;display:inline-block}
+        .pb.paid{background:#fff3e0;color:var(--ct-orange)} .pb.free{background:#e8f5e9;color:var(--ct-green)}
+
+        /* ── Content type row ─────────────────────── */
+        .ct-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+        .ct-tag{background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--ct-heading);display:flex;align-items:center;gap:6px;transition:border-color .2s}
+        .ct-tag:hover{border-color:var(--ct-indigo)}
+
+        /* ── Popup split ──────────────────────────── */
+        .popup-split{display:flex;gap:22px;margin-top:14px;align-items:center;flex-wrap:wrap}
+        .popup-split .img{flex:1 1 340px;min-width:240px}
+        .popup-split .img img{width:100%;border-radius:8px;border:1px solid var(--ct-border);box-shadow:4px 4px 14px rgba(0,0,0,.08)}
+        .popup-split .info{flex:1 1 280px;min-width:220px}
+        .popup-split .info h3{font-size:16px;font-weight:700;color:var(--ct-heading);margin-bottom:8px}
+        .pf{list-style:none;padding:0;margin:0}
+        .pf li{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:6px;margin-bottom:5px;font-size:12.5px;font-weight:600;color:var(--ct-heading)}
+        .pf li i{color:var(--ct-red);font-size:13px;width:18px;text-align:center}
+
+        /* ── Feature grid ─────────────────────────── */
+        .fg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+        .fc{display:flex;gap:10px;align-items:flex-start;padding:14px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;transition:transform .2s,border-color .2s}
+        .fc:hover{transform:translateY(-2px);border-color:var(--ct-red)}
+        .fc .fi{width:34px;height:34px;min-width:34px;background:var(--ct-grad);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff}
+        .fc h4{font-size:13px;font-weight:700;color:var(--ct-heading);margin:0 0 2px}
+        .fc p{font-size:12px;color:var(--ct-text);margin:0;line-height:1.45}
+
+        /* ── Steps ────────────────────────────────── */
+        .steps{counter-reset:s;list-style:none;padding:0;margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+        .steps li{counter-increment:s;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;padding:16px 14px;text-align:center;transition:border-color .2s}
+        .steps li:hover{border-color:var(--ct-indigo)}
+        .steps li::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--ct-grad-red);color:#fff;font-weight:800;font-size:14px;border-radius:50%;margin:0 auto 8px}
+        .steps li strong{display:block;font-size:13px;color:var(--ct-heading);margin-bottom:3px}
+        .steps li span{font-size:11.5px;color:var(--ct-text);line-height:1.45}
+
+        /* ── Who grid ─────────────────────────────── */
+        .wg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+        .wc{display:flex;gap:10px;align-items:flex-start;padding:14px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;transition:border-color .2s}
+        .wc:hover{border-color:var(--ct-red)}
+        .wc .wi{width:34px;height:34px;min-width:34px;background:var(--ct-grad);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
+        .wc h4{font-size:12.5px;font-weight:700;color:var(--ct-heading);margin:0 0 2px}
+        .wc p{font-size:11.5px;color:var(--ct-text);margin:0;line-height:1.4}
+
+        /* ── Use cases ────────────────────────────── */
+        .uc-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+        .uc{background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--ct-heading);display:flex;align-items:center;gap:6px;transition:border-color .2s}
+        .uc:hover{border-color:var(--ct-indigo)}
+
+        /* ── CX ───────────────────────────────────── */
+        .cx{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .cx li{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;background:var(--ct-bg);border-left:3px solid var(--ct-red);border-radius:6px;font-size:12.5px}
+        .cx li i{color:var(--ct-indigo);font-size:14px;margin-top:1px;flex-shrink:0}
+        .cx li strong{color:var(--ct-heading)}
+
+        /* ── Conclusion ───────────────────────────── */
+        .concl{background:var(--ct-grad);border-radius:var(--r);padding:32px 28px;color:#fff;text-align:center;position:relative;overflow:hidden;margin-bottom:22px}
+        .concl::before{content:'';position:absolute;width:220px;height:220px;background:rgba(251,96,96,.08);border-radius:50%;top:-70px;right:-50px}
+        .concl h2{font-size:20px;font-weight:800;margin-bottom:10px;position:relative;z-index:1}
+        .concl p{font-size:13.5px;opacity:.92;max-width:660px;margin:0 auto 18px;line-height:1.6;position:relative;z-index:1}
+        .concl a.cta{background:var(--ct-red);border-color:var(--ct-red);position:relative;z-index:1}
+        .concl a.cta:hover{background:var(--ct-red-dk);border-color:var(--ct-red-dk)}
+
+        /* ── Version badges ───────────────────────── */
+        .vb{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+        .vb span{padding:3px 12px;border-radius:5px;font-size:12px;font-weight:600;background:#eee8f5;color:var(--ct-indigo)}
+
+        /* ── Sub heading ──────────────────────────── */
+        .sh{font-size:15px;font-weight:700;color:var(--ct-heading);margin:18px 0 6px;display:flex;align-items:center;gap:7px}
+        .sh i{color:var(--ct-red)}
+
+        /* ═══════════════════════════════════════════
+           ABOUT CLANSTECH SECTION
+           ═══════════════════════════════════════════ */
+        .company{background:var(--ct-bg-card);border:1px solid var(--ct-border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+
+        .co-header{padding:30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--ct-border);background:var(--ct-bg-card)}
+
+        .co-logo-area{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:10px}
+        .co-logo-area img{height:54px;width:auto;object-fit:contain}
+
+        .silver-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#dcdcdc 0%,#f0f0f0 50%,#c8c8c8 100%);color:#444;padding:5px 14px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #c0c0c0}
+        .silver-badge i{font-size:13px;color:#888}
+
+        .co-divider{width:1px;height:68px;background:var(--ct-border);flex-shrink:0}
+
+        .co-intro{flex:1 1 300px}
+        .co-intro h2{font-size:22px;font-weight:800;color:var(--ct-heading);margin-bottom:3px}
+        .co-intro .tagline{font-size:13.5px;color:var(--ct-text);margin-bottom:12px}
+
+        .partner-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px}
+        .partner-strip .pt{font-size:12px;font-weight:700;color:var(--ct-text);text-transform:uppercase;letter-spacing:.4px}
+        .partner-strip img{height:32px;width:auto;object-fit:contain}
+
+        .co-body{padding:28px 30px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+        .co-body h3{font-size:15px;font-weight:700;color:var(--ct-heading);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .co-body h3 i{color:var(--ct-red);font-size:16px}
+
+        .cl{list-style:none;padding:0;margin:0}
+        .cl li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--ct-border);font-size:13.5px}
+        .cl li:last-child{border-bottom:none}
+        .cl li .ci{width:32px;height:32px;min-width:32px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--ct-red);font-size:14px}
+        .cl li strong{display:block;color:var(--ct-heading);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px}
+        .cl li a{color:var(--ct-teal-dk);text-decoration:none}
+        .cl li a:hover{text-decoration:underline;color:var(--ct-red)}
+
+        .sg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .sv{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ct-bg);border:1px solid var(--ct-border);border-radius:7px;font-size:12px;font-weight:600;color:var(--ct-heading);transition:border-color .2s}
+        .sv:hover{border-color:var(--ct-red)}
+        .sv i{color:var(--ct-red);font-size:13px;flex-shrink:0}
+
+        .co-foot{background:var(--ct-bg);border-top:1px solid var(--ct-border);padding:16px 30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+        .co-foot .ft{font-size:12px;color:var(--ct-text-lt)}
+        .co-foot .fl{display:flex;gap:8px}
+        .co-foot .fl a{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--ct-bg-card);border:1px solid var(--ct-border);border-radius:50%;color:var(--ct-text);font-size:14px;text-decoration:none;transition:all .2s}
+        .co-foot .fl a:hover{background:var(--ct-red);color:#fff;border-color:var(--ct-red)}
+
+        /* ── Responsive ───────────────────────────── */
+        @media(max-width:768px){
+            .hero{padding:34px 18px 30px} .hero h1{font-size:23px}
+            .sec{padding:22px 18px}
+            .prov-strip{grid-template-columns:repeat(3,1fr)}
+            .fg,.cx{grid-template-columns:1fr}
+            .steps{grid-template-columns:1fr}
+            .wg{grid-template-columns:1fr}
+            .popup-split{flex-direction:column}
+            .co-body{grid-template-columns:1fr}
+            .co-header{flex-direction:column;text-align:center}
+            .co-divider{width:80px;height:1px}
+            .partner-strip{justify-content:center}
+            .sg{grid-template-columns:1fr}
+        }
+        @media(max-width:480px){
+            .prov-strip{grid-template-columns:repeat(2,1fr)}
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<div class="hero">
+    <div class="pills">
+        <span class="pill">5 AI Providers</span>
+        <span class="pill">Products • Blogs • News • Topics</span>
+        <span class="pill">nopCommerce 4.6 – 4.9</span>
+    </div>
+    <h1>ChatGPTAI <span>Extension</span> Plugin</h1>
+    <p class="sub">A powerful AI-driven content generation solution supporting Azure OpenAI, ChatGPT, Gemini, DeepSeek, and free AnythingLLM. Automatically creates SEO-friendly descriptions, meta tags, and professional content across your entire nopCommerce store.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     OVERVIEW
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-lightbulb"></i></div><h2>Overview</h2></div>
+    <p>In today's competitive eCommerce market, high-quality content is essential. Every product description, blog post, news item, and topic page plays a critical role in attracting visitors, improving search rankings, and converting customers. The <strong>ChatGPTAIExtension Plugin</strong> automates this entire process — generating SEO-optimized content with one click while maintaining consistent quality and brand voice across your store.</p>
+    <p>Manually writing content is time-consuming, inconsistent, and doesn't scale. This plugin eliminates those challenges with AI-powered automation that saves time, improves SEO, and ensures professional results.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     5 AI PROVIDERS
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-bolt"></i></div><h2>5 AI Providers — Your Choice</h2></div>
+    <div class="prov-strip">
+        <div class="prov"><div class="pi"><i class="fa fa-cloud"></i></div><h4>Azure OpenAI</h4><span class="pb paid">Paid</span></div>
+        <div class="prov"><div class="pi"><i class="fa fa-comments"></i></div><h4>ChatGPT</h4><span class="pb paid">Paid</span></div>
+        <div class="prov"><div class="pi"><i class="fa fa-gem"></i></div><h4>Gemini</h4><span class="pb paid">Paid</span></div>
+        <div class="prov"><div class="pi"><i class="fa fa-brain"></i></div><h4>DeepSeek</h4><span class="pb paid">Paid</span></div>
+        <div class="prov"><div class="pi"><i class="fa fa-server"></i></div><h4>AnythingLLM</h4><span class="pb free">Free</span></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;">Multi-provider flexibility ensures you're never locked into a single AI system. Choose based on performance, budget, or privacy needs.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     WHAT IT GENERATES + POPUP
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-layer-group"></i></div><h2>What It Generates</h2></div>
+    <div class="ct-row">
+        <span class="ct-tag">🛒 Product Descriptions</span>
+        <span class="ct-tag">📝 Blog Posts</span>
+        <span class="ct-tag">📰 News Items</span>
+        <span class="ct-tag">📄 Topic Pages</span>
+        <span class="ct-tag">🏷️ Meta Title</span>
+        <span class="ct-tag">🔑 Meta Keywords</span>
+        <span class="ct-tag">📋 Meta Description</span>
+    </div>
+    <div class="sh"><i class="fa fa-window-restore"></i> Customize AI Query Popup</div>
+    <div class="popup-split">
+        <div class="img"><img src="/images/uploaded/ProductDetail/ChatGpt/customize_window.png" alt="Customize AI Query" loading="lazy" /></div>
+        <div class="info">
+            <h3>Full Control Before Generation</h3>
+            <ul class="pf">
+                <li><i class="fa fa-tag"></i> Name (auto-filled, editable)</li>
+                <li><i class="fa fa-language"></i> Language Selection</li>
+                <li><i class="fa fa-key"></i> Key Features &amp; Keywords</li>
+                <li><i class="fa fa-text-width"></i> Word Limit</li>
+                <li><i class="fa fa-microphone"></i> Tone of Voice</li>
+                <li><i class="fa fa-pen-fancy"></i> Custom Tone of Voice</li>
+                <li><i class="fa fa-clipboard-list"></i> Special Instructions</li>
+            </ul>
+        </div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;">All values combine with the configured prompt and are sent to your selected AI provider. Content and meta tags are generated in the selected language for multilingual SEO support.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     HOW IT WORKS
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-gears"></i></div><h2>How It Works</h2></div>
+    <ol class="steps">
+        <li><strong>Enable Plugin</strong><span>Configure page → Enable AI-Powered Services</span></li>
+        <li><strong>Select Provider</strong><span>Choose AI provider &amp; enter API Key → Save</span></li>
+        <li><strong>Enable Sections</strong><span>Toggle Product / Blog / News / Topic &amp; Meta</span></li>
+        <li><strong>Generate Content</strong><span>Click "Generate Using AI" → Customize → Submit</span></li>
+        <li><strong>AI Returns Content</strong><span>SEO-optimized description generated instantly</span></li>
+        <li><strong>Auto Meta Tags</strong><span>Meta title, keywords, description on save</span></li>
+    </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     KEY FEATURES
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-star"></i></div><h2>Key Features</h2></div>
+    <div class="fg">
+        <div class="fc"><div class="fi"><i class="fa fa-robot"></i></div><div><h4>Multi-Provider AI</h4><p>5 providers — Azure, ChatGPT, Gemini, DeepSeek, AnythingLLM</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-layer-group"></i></div><div><h4>Full Content Coverage</h4><p>Products, Blogs, News, Topics — all from admin panel</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-tags"></i></div><div><h4>Auto Meta Tags</h4><p>SEO-optimized Title, Keywords &amp; Description generation</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-sliders"></i></div><div><h4>Global Config Control</h4><p>Enable/disable each section independently</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-pen-nib"></i></div><div><h4>Custom AI Prompts</h4><p>Define tone, structure &amp; style per content type</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-window-maximize"></i></div><div><h4>Smart Query Popup</h4><p>Language, keywords, word limit, tone &amp; instructions</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-copy"></i></div><div><h4>Save &amp; Copy Flexibility</h4><p>Replace content or copy HTML without overwriting</p></div></div>
+        <div class="fc"><div class="fi"><i class="fa fa-shield-halved"></i></div><div><h4>Secure API Integration</h4><p>Safe authentication with your selected AI provider</p></div></div>
+    </div>
+    <div class="vb" style="margin-top:14px;">
+        <span>nopCommerce 4.6</span><span>nopCommerce 4.7</span><span>nopCommerce 4.8</span><span>nopCommerce 4.9</span>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     WHO BENEFITS + USE CASES
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-users"></i></div><h2>Who Benefits &amp; Use Cases</h2></div>
+    <div class="wg">
+        <div class="wc"><div class="wi"><i class="fa fa-store"></i></div><div><h4>Small Business</h4><p>No content writers needed — AI does it all</p></div></div>
+        <div class="wc"><div class="wi"><i class="fa fa-building"></i></div><div><h4>Large Stores</h4><p>Consistent content at scale across thousands of products</p></div></div>
+        <div class="wc"><div class="wi"><i class="fa fa-bullhorn"></i></div><div><h4>Marketing Teams</h4><p>Focus on strategy, not repetitive writing</p></div></div>
+        <div class="wc"><div class="wi"><i class="fa fa-magnifying-glass-chart"></i></div><div><h4>SEO Specialists</h4><p>Optimized meta tags for better rankings</p></div></div>
+        <div class="wc"><div class="wi"><i class="fa fa-pen-to-square"></i></div><div><h4>Content Managers</h4><p>Centralized, consistent content system</p></div></div>
+        <div class="wc"><div class="wi"><i class="fa fa-code"></i></div><div><h4>Agencies &amp; Devs</h4><p>AI automation for client projects</p></div></div>
+    </div>
+    <div class="sh"><i class="fa fa-briefcase"></i> Real-World Use Cases</div>
+    <div class="uc-row">
+        <span class="uc">🚀 New Product Launches</span>
+        <span class="uc">📦 Bulk Catalog Expansion</span>
+        <span class="uc">🔍 SEO Optimization</span>
+        <span class="uc">🔄 Store Migration</span>
+        <span class="uc">🎉 Seasonal Campaigns</span>
+        <span class="uc">✨ Content Refresh</span>
+        <span class="uc">📝 Blog &amp; News Creation</span>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CUSTOMER EXPERIENCE
+     ═══════════════════════════════════════════ -->
+<div class="sec">
+    <div class="sec-h"><div class="ic"><i class="fa fa-heart"></i></div><h2>Enhanced Customer Experience</h2></div>
+    <ul class="cx">
+        <li><i class="fa fa-circle-info"></i><div><strong>Clear Content</strong> — Customers quickly understand features &amp; benefits</div></li>
+        <li><i class="fa fa-fire"></i><div><strong>Engaging Descriptions</strong> — Well-structured content keeps shoppers interested</div></li>
+        <li><i class="fa fa-palette"></i><div><strong>Consistent Voice</strong> — Uniform tone builds brand identity &amp; trust</div></li>
+        <li><i class="fa fa-magnifying-glass"></i><div><strong>Better SEO</strong> — Optimized meta tags improve search discoverability</div></li>
+        <li><i class="fa fa-bolt"></i><div><strong>Faster Decisions</strong> — Accurate info reduces hesitation &amp; boosts conversions</div></li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CONCLUSION
+     ═══════════════════════════════════════════ -->
+<div class="concl">
+    <h2>A Must-Have Tool for Modern nopCommerce Stores</h2>
+    <p>From simple configuration and AI provider selection to customizable prompts and one-click content generation — the ChatGPTAIExtension Plugin helps store owners save time, improve content quality, and scale with confidence.</p>
+    <a href="/chatgptaiextension-plugin" class="cta">GET IT NOW</a>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT CLANSTECH
+     ═══════════════════════════════════════════ -->
+<div class="company">
+
+    <div class="co-header">
+        <div class="co-logo-area">
+            <img src="/images/uploaded/clanstech-logo.png" alt="Clanstech Logo" />
+            <div class="silver-badge"><i class="fa fa-award"></i> Silver Solution Partner</div>
+        </div>
+        <div class="co-divider"></div>
+        <div class="co-intro">
+            <h2>Clanstech</h2>
+            <p class="tagline">Precision-Built nopCommerce Plugins &amp; Custom eCommerce Solutions</p>
+            <div class="partner-strip">
+                <span class="pt">Official nopCommerce Silver Solution Partner</span>
+                <img src="/images/uploaded/nopcommerce-silver-partner-badge.png" alt="nopCommerce Silver Partner Badge" />
+            </div>
+        </div>
+    </div>
+
+    <div class="co-body">
+        <div>
+            <h3><i class="fa fa-address-book"></i> Contact Information</h3>
+            <ul class="cl">
+                <li><div class="ci"><i class="fa fa-globe"></i></div><div><strong>Website</strong><a href="https://clanstech.com" target="_blank" rel="noopener">www.clanstech.com</a></div></li>
+                <li><div class="ci"><i class="fa fa-envelope"></i></div><div><strong>Email Support</strong><a href="mailto:info@clanstech.com">info@clanstech.com</a></div></li>
+                <li><div class="ci"><i class="fa fa-phone"></i></div><div><strong>Phone</strong><a href="tel:+917042615658">+91 704 261 5658</a></div></li>
+                <li><div class="ci"><i class="fa fa-location-dot"></i></div><div><strong>Address</strong>G-282, G Block, Sector – 63,<br />Noida, Uttar Pradesh 201309, India</div></li>
+                <li><div class="ci"><i class="fa fa-headset"></i></div><div><strong>Support</strong><a href="https://clanstech.com/contactus" target="_blank" rel="noopener">clanstech.com/contactus</a></div></li>
+            </ul>
+        </div>
+        <div>
+            <h3><i class="fa fa-wrench"></i> Services We Provide</h3>
+            <div class="sg">
+                <div class="sv"><i class="fa fa-puzzle-piece"></i> Plugin Development</div>
+                <div class="sv"><i class="fa fa-code"></i> Custom nopCommerce Dev</div>
+                <div class="sv"><i class="fa fa-palette"></i> Theme Customization</div>
+                <div class="sv"><i class="fa fa-cart-shopping"></i> eCommerce Solutions</div>
+                <div class="sv"><i class="fa fa-arrow-up-right-dots"></i> Migration &amp; Upgrades</div>
+                <div class="sv"><i class="fa fa-gauge-high"></i> Performance Optimization</div>
+                <div class="sv"><i class="fa fa-store"></i> Multi-Vendor Solutions</div>
+                <div class="sv"><i class="fa fa-life-ring"></i> Support &amp; Maintenance</div>
+                <div class="sv"><i class="fa fa-plug"></i> API &amp; Integrations</div>
+                <div class="sv"><i class="fa fa-server"></i> Hosting &amp; Domain</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="co-foot">
+        <span class="ft">© Clanstech — nopCommerce Silver Solution Partner · Noida, India</span>
+        <div class="fl">
+            <a href="https://clanstech.com" target="_blank" rel="noopener" title="Website"><i class="fa fa-globe"></i></a>
+            <a href="https://www.nopcommerce.com/en/clanstech" target="_blank" rel="noopener" title="nopCommerce"><i class="fa fa-store"></i></a>
+            <a href="mailto:info@clanstech.com" title="Email"><i class="fa fa-envelope"></i></a>
+            <a href="tel:+917042615658" title="Call"><i class="fa fa-phone"></i></a>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</body>
+</html>

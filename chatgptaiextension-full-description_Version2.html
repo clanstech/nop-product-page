@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPTAI Extension Plugin – Full Description</title>
+    <style>
+        /* ============================================================
+           nopCommerce‑style brand tokens
+           ============================================================ */
+        :root {
+            --nop-primary:    #38C3DB;
+            --nop-primary-dk: #2AA8BF;
+            --nop-dark:       #313131;
+            --nop-text:       #4a4a4a;
+            --nop-light-bg:   #f5f9fb;
+            --nop-white:      #ffffff;
+            --nop-border:     #e4e9ed;
+            --nop-accent:     #1b8fa8;
+            --nop-green:      #27ae60;
+            --nop-orange:     #f39c12;
+            --nop-gradient:   linear-gradient(135deg, #38C3DB 0%, #1b8fa8 100%);
+            --nop-radius:     10px;
+            --nop-shadow:     0 4px 24px rgba(0,0,0,.07);
+            --nop-shadow-lg:  0 8px 40px rgba(0,0,0,.10);
+            --nop-font:       'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* ============================================================
+           Reset & base
+           ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--nop-font);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--nop-text);
+            background: var(--nop-light-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================
+           Full‑description wrapper
+           ============================================================ */
+        .full-description {
+            max-width: 920px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+
+        /* ============================================================
+           Hero banner
+           ============================================================ */
+        .fd-hero {
+            background: var(--nop-gradient);
+            border-radius: var(--nop-radius);
+            padding: 48px 40px;
+            color: var(--nop-white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--nop-shadow-lg);
+        }
+
+        .fd-hero::before {
+            content: '';
+            position: absolute;
+            width: 340px; height: 340px;
+            background: rgba(255,255,255,.08);
+            border-radius: 50%;
+            top: -120px; right: -80px;
+        }
+
+        .fd-hero::after {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,.06);
+            border-radius: 50%;
+            bottom: -60px; left: -40px;
+        }
+
+        .fd-hero h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fd-hero .fd-hero-sub {
+            font-size: 15px;
+            opacity: .92;
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fd-hero .fd-badge {
+            display: inline-block;
+            background: rgba(255,255,255,.2);
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           Section cards
+           ============================================================ */
+        .fd-section {
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: var(--nop-radius);
+            padding: 32px 36px;
+            margin-top: 24px;
+            box-shadow: var(--nop-shadow);
+            transition: box-shadow .25s ease;
+        }
+
+        .fd-section:hover {
+            box-shadow: var(--nop-shadow-lg);
+        }
+
+        .fd-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fd-section h2 .fd-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px; height: 36px;
+            background: var(--nop-gradient);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .fd-section p {
+            margin-bottom: 14px;
+        }
+
+        /* ============================================================
+           Feature grid
+           ============================================================ */
+        .fd-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .fd-feature-card {
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 8px;
+            padding: 22px 20px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .fd-feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(56,195,219,.15);
+        }
+
+        .fd-feature-card .fc-icon {
+            width: 42px; height: 42px;
+            background: var(--nop-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .fd-feature-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--nop-dark);
+            margin-bottom: 6px;
+        }
+
+        .fd-feature-card p {
+            font-size: 13.5px;
+            color: var(--nop-text);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           Benefits list
+           ============================================================ */
+        .fd-benefits {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .fd-benefits li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--nop-light-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--nop-primary);
+            font-size: 14px;
+        }
+
+        .fd-benefits li .bl-check {
+            color: var(--nop-green);
+            font-size: 18px;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        .fd-benefits li strong {
+            color: var(--nop-dark);
+        }
+
+        /* ============================================================
+           Steps / How it works
+           ============================================================ */
+        .fd-steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .fd-steps li {
+            counter-increment: step;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--nop-border);
+        }
+
+        .fd-steps li:last-child { border-bottom: none; }
+
+        .fd-steps li::before {
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px; height: 36px;
+            background: var(--nop-gradient);
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .fd-steps li div { padding-top: 4px; }
+
+        .fd-steps li strong {
+            display: block;
+            color: var(--nop-dark);
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .fd-steps li span {
+            font-size: 13.5px;
+            color: var(--nop-text);
+        }
+
+        /* ============================================================
+           Ideal‑for tags
+           ============================================================ */
+        .fd-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .fd-tags .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--nop-light-bg);
+            border: 1px solid var(--nop-border);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--nop-accent);
+            transition: background .2s;
+        }
+
+        .fd-tags .tag:hover {
+            background: #e0f5fa;
+        }
+
+        /* ============================================================
+           Info bar (version / support)
+           ============================================================ */
+        .fd-info-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .fd-info-card {
+            background: var(--nop-white);
+            border: 1px solid var(--nop-border);
+            border-radius: var(--nop-radius);
+            padding: 22px 24px;
+            text-align: center;
+            box-shadow: var(--nop-shadow);
+        }
+
+        .fd-info-card .ic-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: #999;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .fd-info-card .ic-value {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--nop-dark);
+        }
+
+        .fd-info-card .ic-value a {
+            color: var(--nop-primary);
+            text-decoration: none;
+        }
+
+        .fd-info-card .ic-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================
+           CTA button
+           ============================================================ */
+        .fd-cta {
+            text-align: center;
+            margin-top: 32px;
+            padding-bottom: 8px;
+        }
+
+        .fd-cta a {
+            display: inline-block;
+            background: var(--nop-gradient);
+            color: var(--nop-white);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 14px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: .3px;
+            box-shadow: 0 4px 16px rgba(56,195,219,.35);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .fd-cta a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(56,195,219,.45);
+        }
+
+        .fd-cta .fd-cta-sub {
+            display: block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ============================================================
+           Responsive
+           ============================================================ */
+        @media (max-width: 640px) {
+            .fd-hero { padding: 32px 20px; }
+            .fd-hero h1 { font-size: 22px; }
+            .fd-section { padding: 24px 20px; }
+            .fd-features-grid { grid-template-columns: 1fr; }
+            .fd-benefits { grid-template-columns: 1fr; }
+            .fd-info-bar { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="full-description">
+
+    <!-- ============================
+         HERO BANNER
+         ============================ -->
+    <div class="fd-hero">
+        <span class="fd-badge">Powered by Microsoft Azure OpenAI</span>
+        <h1>ChatGPTAI Extension Plugin</h1>
+        <p class="fd-hero-sub">
+            Automatically generate high-quality, SEO-optimized product descriptions for your
+            nopCommerce store with the power of ChatGPT — in just one click.
+        </p>
+    </div>
+
+    <!-- ============================
+         OVERVIEW
+         ============================ -->
+    <div class="fd-section">
+        <h2><span class="fd-icon">📖</span> Overview</h2>
+        <p>
+            The <strong>ChatGPTAI Extension Plugin</strong> by <strong>Clanstech</strong> brings the power
+            of artificial intelligence directly into your nopCommerce admin panel. Built on
+            <strong>Microsoft Azure OpenAI (ChatGPT)</strong>, it enables store administrators to
+            generate both short and long product descriptions instantly — eliminating the tedious,
+            time-consuming task of writing unique content for every product in your catalog.
+        </p>
+        <p>
+            Whether you manage a small boutique or a large-scale e-commerce operation with thousands
+            of products, this plugin dramatically accelerates your content creation workflow while
+            maintaining consistent quality and brand voice across your entire store.
+        </p>
+    </div>
+
+    <!-- ============================
+         KEY FEATURES (card grid)
+         ============================ -->
+    <div class="fd-section">
+        <h2><span class="fd-icon">⚡</span> Key Features</h2>
+        <div class="fd-features-grid">
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">🤖</div>
+                <h3>AI-Powered Content Generation</h3>
+                <p>Utilizes OpenAI's ChatGPT to create contextually relevant, engaging, and SEO-friendly short &amp; long product descriptions.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">👆</div>
+                <h3>One-Click Generation</h3>
+                <p>Click the <em>"Fill Using ChatGPT"</em> button on any product edit page to generate descriptions instantly — no external tools needed.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">🎨</div>
+                <h3>Customizable Output</h3>
+                <p>Choose short or long descriptions. Adjust tone (professional, casual, promotional) and detail level to match your brand identity.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">📦</div>
+                <h3>Bulk Generation Support</h3>
+                <p>Generate AI-powered descriptions for multiple products at once — ideal for large catalogs or seasonal batch updates.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">✏️</div>
+                <h3>Editable Results</h3>
+                <p>Review, refine, and manually edit any AI-generated content before publishing to ensure it meets your quality standards.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">🔌</div>
+                <h3>Seamless nopCommerce Integration</h3>
+                <p>Integrates directly into the nopCommerce admin product edit page. No external applications or technical expertise required.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">🏪</div>
+                <h3>Multi-Store Compatibility</h3>
+                <p>Fully supports nopCommerce's multi-store feature, allowing tailored content for each storefront in your setup.</p>
+            </div>
+
+            <div class="fd-feature-card">
+                <div class="fc-icon">🔒</div>
+                <h3>Scalable &amp; Secure</h3>
+                <p>Built on Microsoft Azure OpenAI infrastructure, providing enterprise-grade reliability, security, and performance.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================
+         BENEFITS
+         ============================ -->
+    <div class="fd-section">
+        <h2><span class="fd-icon">🏆</span> Benefits</h2>
+        <ul class="fd-benefits">
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Save Time</strong> — Generate quality content in seconds, not hours. Dramatically reduce manual writing effort.</div>
+            </li>
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Improve SEO</strong> — AI-optimized descriptions boost product visibility in search engine results.</div>
+            </li>
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Ensure Consistency</strong> — Maintain a unified brand voice and tone across your entire product catalog.</div>
+            </li>
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Speed Up Launches</strong> — Quickly populate new product pages, enabling faster time-to-market.</div>
+            </li>
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Reduce Team Workload</strong> — Free up your content team to focus on strategy and growth.</div>
+            </li>
+            <li>
+                <span class="bl-check">✅</span>
+                <div><strong>Increase Conversions</strong> — Compelling descriptions drive more clicks and higher purchase rates.</div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ============================
+         HOW IT WORKS (numbered steps)
+         ============================ -->
+    <div class="fd-section">
+        <h2><span class="fd-icon">🔧</span> How It Works</h2>
+        <ol class="fd-steps">
+            <li>
+                <div>
+                    <strong>Install the Plugin</strong>
+                    <span>Download the ChatGPTAI Extension plugin and install it via the nopCommerce admin panel
+                    (<em>Configuration → Plugins → Local Plugins</em>).</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>Configure Azure OpenAI Credentials</strong>
+                    <span>Enter your Microsoft Azure OpenAI API credentials in the plugin settings to connect the AI engine to your store.</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>Generate Descriptions</strong>
+                    <span>Navigate to any product edit page and click the <em>"Fill Using ChatGPT"</em> button to generate a short or long description instantly.</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>Review &amp; Publish</strong>
+                    <span>Review the AI-generated content, make any desired edits, and save. Your SEO-optimized description is now live!</span>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <!-- ============================
+         IDEAL FOR (tag pills)
+         ============================ -->
+    <div class="fd-section">
+        <h2><span class="fd-icon">🎯</span> Ideal For</h2>
+        <div class="fd-tags">
+            <span class="tag">🛒 Large Product Catalogs</span>
+            <span class="tag">📈 SEO-Focused Stores</span>
+            <span class="tag">🏪 Multi-Store Setups</span>
+            <span class="tag">🚀 Fast Product Launches</span>
+            <span class="tag">👥 Small &amp; Large Teams</span>
+            <span class="tag">🏢 B2B &amp; B2C Commerce</span>
+            <span class="tag">🌍 Multi-Language Stores</span>
+            <span class="tag">🎯 Marketing Teams</span>
+        </div>
+    </div>
+
+    <!-- ============================
+         INFO BAR (version / price / support)
+         ============================ -->
+    <div class="fd-info-bar">
+        <div class="fd-info-card">
+            <div class="ic-label">Supported Version</div>
+            <div class="ic-value">nopCommerce 4.60</div>
+        </div>
+        <div class="fd-info-card">
+            <div class="ic-label">Price</div>
+            <div class="ic-value" style="color:#27ae60;">FREE</div>
+        </div>
+        <div class="fd-info-card">
+            <div class="ic-label">Developer</div>
+            <div class="ic-value"><a href="https://clanstech.com" target="_blank" rel="noopener">Clanstech</a></div>
+        </div>
+        <div class="fd-info-card">
+            <div class="ic-label">Documentation</div>
+            <div class="ic-value"><a href="https://clanstech.com/chatgptaiextension-plugin-documentation" target="_blank" rel="noopener">View Docs</a></div>
+        </div>
+    </div>
+
+    <!-- ============================
+         CTA
+         ============================ -->
+    <div class="fd-cta">
+        <a href="https://clanstech.com/chatgptaiextension-plugin" target="_blank" rel="noopener">
+            Download ChatGPTAI Extension
+        </a>
+        <span class="fd-cta-sub">Free plugin • No credit card required • nopCommerce 4.60</span>
+    </div>
+
+</div>
+
+</body>
+</html>
