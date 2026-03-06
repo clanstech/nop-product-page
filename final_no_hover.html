@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPTAI Extension Plugin – nopCommerce</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ─────────────────────────────────────────────── */
+:root {
+  --red:     #fb6060;
+  --navy:    #2c2c3e;
+  --blue:    #4753cb;
+  --green:   #27ae60;
+  --orange:  #e67e22;
+  --purple:  #9b59b6;
+  --teal:    #1abc9c;
+  --sky:     #3498db;
+  --yellow:  #f39c12;
+  --text:    #444;
+  --muted:   #777;
+  --border:  #e2e4ec;
+  --bg-card: #fff;
+  --shadow:  0 2px 8px rgba(0,0,0,.06);
+  --radius:  8px;
+  --font:    'Plus Jakarta Sans','Segoe UI','Helvetica Neue',Arial,sans-serif;
+  --c1: #4f46e5; --c1-bg: #eef2ff;
+  --c2: #0891b2; --c2-bg: #ecfeff;
+  --c3: #059669; --c3-bg: #ecfdf5;
+  --fs-xs:   10px;
+  --fs-sm:   12px;
+  --fs-base: 14px;
+  --fs-md:   15px;
+  --fs-lg:   18px;
+  --fs-xl:   20px;
+  --fs-2xl:  22px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ─── Base ───────────────────────────────────────────────────── */
+#ct-plugin-desc {
+  max-width: 940px; margin: 0 auto; padding: 0;
+  font-family: var(--font); font-size: var(--fs-base); line-height: 1.7; color: var(--text);
+}
+#ct-plugin-desc p { margin: 0 0 14px; }
+#ct-plugin-desc strong { color: var(--navy); }
+
+/* ─── Section Titles ─────────────────────────────────────────── */
+.ct-section-title {
+  font-size: var(--fs-xl); font-weight: 700; color: var(--navy);
+  text-align: center; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px;
+}
+.ct-section-divider {
+  width: 50px; height: 3px; background: var(--red);
+  margin: 0 auto 20px; border-radius: 2px;
+}
+
+/* ─── CTA Buttons ────────────────────────────────────────────── */
+.ct-btn-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+.ct-btn {
+  display: inline-block; padding: 10px 30px; font-size: var(--fs-xs); font-weight: 700;
+  text-transform: uppercase; text-decoration: none; border-radius: 4px; letter-spacing: .5px;
+}
+.ct-btn-primary   { background: var(--red);  color: #fff; }
+.ct-btn-secondary { background: var(--navy); color: #fff; }
+
+/* ─── Provider Cards ─────────────────────────────────────────── */
+.ct-provs { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 28px; }
+.ct-prov-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 8px; text-align: center; box-shadow: var(--shadow);
+}
+.ct-prov-card img, .ct-prov-card svg { width: 28px; height: 28px; margin: 0 auto 6px; opacity: .8; display: block; }
+.ct-prov-name { display: block; font-size: var(--fs-base); font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.ct-badge { display: inline-block; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; letter-spacing: .3px; }
+.ct-badge-paid { background: #fff3e0; color: var(--orange); }
+.ct-badge-free { background: #e8f5e9; color: var(--green); }
+
+/* ─── Version Cards ──────────────────────────────────────────── */
+.ct-versions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.ct-version-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 24px; text-align: center; box-shadow: var(--shadow); min-width: 100px;
+}
+.ct-version-number { display: block; font-size: var(--fs-2xl); font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.ct-version-number.latest { color: var(--red); }
+.ct-badge-latest    { background: #fff3e0; color: var(--orange); }
+.ct-badge-supported { background: #e8f5e9; color: var(--green); }
+
+/* ─── Image Block ────────────────────────────────────────────── */
+.ct-img-block { text-align: center; margin-bottom: 28px; }
+.ct-img-block img { max-width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); display: inline-block; }
+
+/* ─── Popup ──────────────────────────────────────────────────── */
+.ct-popup { display: flex; gap: 24px; margin-bottom: 28px; align-items: center; flex-wrap: wrap; }
+.ct-popup-img { flex: 0 0 58%; min-width: 320px; max-width: 580px; }
+.ct-popup-img img { width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,.06); display: block; }
+.ct-popup-text { flex: 1 1 260px; min-width: 0; }
+.ct-popup-item { padding: 6px 0; border-bottom: 1px solid #eee; font-size: var(--fs-base); color: var(--navy); }
+.ct-popup-item:last-child { border-bottom: none; }
+.ct-popup-note { margin-top: 10px; font-size: var(--fs-sm); color: var(--muted); }
+
+/* ─── Works Across Store ─────────────────────────────────────── */
+.ct-screen-row, .ct-screen-row-rev {
+  display: flex; gap: 24px; align-items: center; margin-bottom: 24px; padding: 20px 0;
+}
+.ct-screen-row-rev { flex-direction: row-reverse; }
+.ct-screen-text { flex: 0 0 35%; min-width: 200px; }
+.ct-screen-img  { flex: 1 1 60%; min-width: 0; }
+.ct-screen-img img { width: 100%; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.ct-screen-tag { display: inline-block; color: #fff; font-size: var(--fs-base); font-weight: 700; text-transform: uppercase; padding: 5px 16px; border-radius: 3px; letter-spacing: .5px; margin-bottom: 10px; }
+.ct-screen-title { font-size: var(--fs-lg); font-weight: 700; color: var(--navy); margin: 0 0 6px; }
+.ct-screen-desc { font-size: var(--fs-md); color: #666; margin: 0; line-height: 1.6; }
+.ct-hr { width: 100%; height: 1px; background: #eee; margin-bottom: 24px; }
+
+/* ─── Configuration text ─────────────────────────────────────── */
+.ct-config-text { font-size: var(--fs-md); line-height: 1.8; }
+
+/* ─── Features Grid ──────────────────────────────────────────── */
+.ct-features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+.ct-feature-card {
+  display: flex; align-items: flex-start; gap: 14px; padding: 18px 16px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.ct-feature-icon { flex-shrink: 0; width: 38px; height: 38px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.ct-feature-icon svg { width: 18px; height: 18px; display: block; }
+.ct-feature-body { min-width: 0; }
+.ct-feature-name { display: block; font-size: var(--fs-base); font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.ct-feature-desc { font-size: var(--fs-sm); color: var(--muted); line-height: 1.5; }
+
+/* ─── Link ───────────────────────────────────────────────────── */
+.ct-link { color: #1b8fa8; text-decoration: none; font-weight: 600; }
+
+/* ══ OUR SERVICES ══ */
+.ct-svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.ct-svc-card {
+  background: #fff; border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 28px 24px 26px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  box-shadow: var(--shadow);
+}
+.ct-svc-card:nth-child(1) { --c: var(--c1); --cbg: var(--c1-bg); border-top: 3px solid var(--c1); }
+.ct-svc-card:nth-child(2) { --c: var(--c2); --cbg: var(--c2-bg); border-top: 3px solid var(--c2); }
+.ct-svc-card:nth-child(3) { --c: var(--c3); --cbg: var(--c3-bg); border-top: 3px solid var(--c3); }
+.ct-svc-ico { width: 50px; height: 50px; border-radius: 12px; background: var(--cbg); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; flex-shrink: 0; }
+.ct-svc-ico svg { width: 22px; height: 22px; display: block; }
+.ct-svc-name { font-size: var(--fs-base); font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.35; }
+.ct-svc-rule { width: 36px; height: 2.5px; background: var(--c); border-radius: 2px; margin-bottom: 12px; }
+.ct-svc-desc { font-size: var(--fs-sm); color: #666; line-height: 1.8; }
+
+/* ══ FOOTER ══ */
+.ct-footer-wrap {
+  border-radius: 20px; overflow: hidden;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 4px 20px rgba(44,44,62,.07);
+}
+.ct-footer-brand {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 36px; background: #f4f5f9;
+  border-bottom: 1.5px solid var(--border);
+}
+.ct-brand-left   { display: flex; align-items: center; flex: 1; justify-content: flex-start; }
+.ct-brand-right  { display: flex; align-items: center; flex: 1; justify-content: flex-end; }
+.ct-brand-center { display: flex; align-items: center; justify-content: center; flex: 1; }
+.ct-logo-box     { display: flex; align-items: center; gap: 10px; }
+.ct-footer-logo  { height: 34px; width: auto; object-fit: contain; }
+.ct-partner-logo { height: 48px; width: auto; object-fit: contain; }
+.ct-logo-text    { display: flex; flex-direction: column; line-height: 1.15; }
+.ct-logo-text-main { font-size: var(--fs-md); font-weight: 900; color: var(--navy); }
+.ct-logo-text-sub  { font-size: var(--fs-xs); font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+.ct-nop-text     { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; }
+.ct-nop-text-main { font-size: var(--fs-base); font-weight: 900; color: var(--navy); }
+.ct-nop-text-sub  { font-size: var(--fs-xs); font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.ct-silver-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg,#e8e8e8 0%,#f8f8f8 45%,#d4d4d4 55%,#eee 100%);
+  color: #444; padding: 8px 20px; border-radius: 8px;
+  font-size: var(--fs-xs); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.8);
+  white-space: nowrap;
+}
+.ct-silver-badge svg { width: 13px; height: 13px; color: #888; flex-shrink: 0; }
+.ct-contact-band {
+  background: #f4f5f9; padding: 36px 32px 32px;
+  border-bottom: 1.5px solid var(--border);
+}
+.ct-contact-band-title {
+  font-size: var(--fs-xl); font-weight: 800; color: var(--navy);
+  text-align: center; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 8px;
+}
+.ct-contact-band-divider { width: 48px; height: 3px; background: var(--red); margin: 0 auto 32px; border-radius: 2px; }
+.ct-contact-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.ct-contact-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: #fff; border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 26px 16px 22px; text-decoration: none;
+}
+.ct-contact-card:nth-child(1) { --c: var(--c1); --cbg: var(--c1-bg); border-top: 3px solid var(--c1); }
+.ct-contact-card:nth-child(2) { --c: var(--c2); --cbg: var(--c2-bg); border-top: 3px solid var(--c2); }
+.ct-contact-card:nth-child(3) { --c: var(--c3); --cbg: var(--c3-bg); border-top: 3px solid var(--c3); }
+.ct-contact-ico { width: 56px; height: 56px; border-radius: 50%; background: var(--cbg); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; flex-shrink: 0; }
+.ct-contact-ico svg { width: 22px; height: 22px; display: block; }
+.ct-contact-label { display: block; font-size: var(--fs-xs); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--c); margin-bottom: 4px; }
+.ct-contact-value { display: block; font-size: var(--fs-base); font-weight: 700; color: var(--navy); }
+.ct-footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px; padding: 14px 36px; background: #eaebef;
+  border-top: 1px solid var(--border);
+}
+.ct-footer-copy { font-size: var(--fs-xs); color: var(--muted); margin: 0; }
+.ct-footer-partner-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--fs-sm); font-weight: 700; color: #1b8fa8;
+  text-decoration: none;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ct-popup { gap: 20px; align-items: flex-start; }
+  .ct-popup-img { flex: 0 0 60%; max-width: 60%; min-width: 0; }
+  .ct-popup-text { flex: 1 1 36%; min-width: 0; }
+}
+@media (min-width: 769px) and (max-width: 860px) {
+  .ct-popup { flex-direction: column; gap: 16px; }
+  .ct-popup-img { flex: 0 0 100%; max-width: 100%; min-width: 0; }
+  .ct-popup-text { flex: 1 1 100%; min-width: 0; }
+}
+@media (max-width: 768px) {
+  #ct-plugin-desc {
+    --fs-xs:   9px; --fs-sm: 11px; --fs-base: 13px;
+    --fs-md:   14px; --fs-lg: 16px; --fs-xl: 17px; --fs-2xl: 20px;
+  }
+  .ct-provs    { grid-template-columns: repeat(3,1fr); }
+  .ct-features { grid-template-columns: 1fr; }
+  .ct-popup    { flex-direction: column-reverse; gap: 12px; }
+  .ct-popup-img, .ct-popup-text { flex: 1 1 100%; margin-top: 0; padding-top: 0; }
+  .ct-popup-img img { margin-top: 0; }
+  .ct-screen-row, .ct-screen-row-rev { flex-direction: column; }
+  .ct-screen-text, .ct-screen-img    { flex: 1 1 100%; min-width: 0; }
+  .ct-svc-grid      { grid-template-columns: 1fr; gap: 12px; }
+  .ct-contact-cards { grid-template-columns: 1fr; gap: 10px; }
+  .ct-footer-brand  { flex-direction: column; align-items: center; padding: 20px; gap: 16px; }
+  .ct-brand-left, .ct-brand-right { justify-content: center; }
+  .ct-contact-band  { padding: 24px 20px; }
+  .ct-footer-bottom { flex-direction: column; align-items: flex-start; padding: 14px 20px; }
+}
+@media (max-width: 480px) {
+  .ct-provs   { grid-template-columns: 1fr 1fr; }
+  .ct-btn-row { flex-direction: column; align-items: stretch; }
+  .ct-btn-row .ct-btn { text-align: center; }
+}
+</style>
+</head>
+<body>
+<div id="ct-plugin-desc">
+
+  <!-- ── CTA Buttons ── -->
+  <div class="ct-btn-row">
+    <a href="/chatgptaiextension-plugin" class="ct-btn ct-btn-primary">Get It Now</a>
+    <a href="/chatgptaiextension-plugin-documentation" class="ct-btn ct-btn-secondary">Documentation</a>
+  </div>
+
+  <!-- ── Intro ── -->
+  <p>The <strong>ChatGPTAI Extension Plugin for nopCommerce</strong> is a powerful AI-driven content generation solution supporting <strong>Five AI Providers</strong> - Azure OpenAI, ChatGPT, Gemini, DeepSeek, and the free AI option AnythingLLM. It automatically creates SEO-friendly descriptions for Products, Blog posts, News Items, and Topic pages. The plugin also generates Meta Title, Meta Keywords, and Meta Description based on configuration settings.</p>
+  <p>Designed to save time and reduce manual effort, it ensures consistent and professional content across your website. With one-click functionality and secure API integration, it helps improve search engine visibility and overall store performance.</p>
+  <p style="margin-bottom:28px;">Whether you manage a small store or a large-scale eCommerce platform, this plugin simplifies content creation, improves productivity, and enhances overall store performance across <strong>nopCommerce 4.6, 4.7, 4.8, and 4.9</strong>.</p>
+
+  <!-- ── Banner ── -->
+  <div class="ct-img-block">
+    <img src="plugin-disciption-banner-chatgptai.jpg" alt="ChatGPTAI Extension Plugin for nopCommerce" loading="lazy" width="940" />
+  </div>
+
+  <!-- ── Supported AI Providers ── -->
+  <h2 class="ct-section-title">Supported AI Providers</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-provs">
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftazure.svg" alt="Azure" width="28" height="28" />
+      <strong class="ct-prov-name">Azure OpenAI</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg" alt="ChatGPT" width="28" height="28" />
+      <strong class="ct-prov-name">ChatGPT</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" alt="Gemini" width="28" height="28" />
+      <strong class="ct-prov-name">Gemini</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <g>
+    <!-- Path 1 (Blue) -->
+    <path d="M 82.00 119.02 C78.52,120.78 75.45,121.37 68.50,121.61 C58.07,121.97 55.81,121.49 47.00,117.03 C35.89,111.41 26.68,99.91 23.36,87.50 C21.78,81.59 21.71,80.70 22.88,81.42 C23.36,81.72 23.75,80.81 23.75,79.41 C23.75,75.77 25.88,73.83 26.65,76.77 C26.97,78.00 27.60,79.00 28.04,79.00 C28.48,79.00 29.14,80.35 29.50,81.99 C29.86,83.64 30.68,85.33 31.33,85.74 C31.97,86.16 33.23,88.07 34.12,90.00 C38.70,99.93 49.58,109.00 56.89,109.00 C60.76,109.00 61.56,107.31 59.54,103.43 C57.51,99.53 57.59,99.00 60.27,99.00 C61.52,99.00 66.80,101.93 72.00,105.50 C80.11,111.07 82.09,112.00 85.84,112.00 L 90.23 112.00 L 84.26 105.62 C77.93,98.86 71.00,88.37 71.00,85.56 C71.00,84.64 70.55,84.16 70.00,84.50 C69.45,84.84 69.00,84.59 69.00,83.95 C69.00,83.31 67.85,81.42 66.44,79.75 C65.04,78.08 64.25,76.36 64.69,75.93 C65.14,75.50 68.20,75.02 71.50,74.87 C77.35,74.61 77.51,74.67 77.82,77.30 C78.04,79.19 78.71,80.00 80.07,80.00 C81.13,80.00 82.86,80.86 83.92,81.92 C84.97,82.97 86.07,83.59 86.37,83.30 C86.66,83.00 87.63,83.49 88.52,84.38 C90.70,86.56 96.86,86.53 97.70,84.33 C98.06,83.41 97.60,81.37 96.69,79.78 C95.78,78.20 95.48,77.18 96.02,77.51 C96.56,77.85 97.00,77.61 97.00,77.00 C97.00,76.39 97.42,76.14 97.93,76.46 C98.44,76.77 99.12,76.62 99.43,76.11 C99.74,75.61 102.72,75.25 106.04,75.33 C111.43,75.45 112.14,75.72 112.65,77.74 C112.96,78.98 113.62,80.00 114.10,80.00 C116.43,80.00 110.34,91.85 102.46,102.65 C100.93,104.74 101.05,104.88 106.44,107.35 C109.50,108.74 112.00,110.34 112.00,110.89 C112.00,114.44 103.27,116.06 95.96,113.87 C92.67,112.88 91.81,113.00 89.34,114.74 C87.78,115.84 84.47,117.77 82.00,119.02 Z" fill="rgb(71,101,248)"/>
+    <!-- Path 2 (Lighter Blue) -->
+    <path d="M 114.60 80.57 C114.57,80.20 114.41,80.00 114.10,80.00 C113.62,80.00 112.96,78.98 112.65,77.74 C112.14,75.72 111.43,75.45 106.04,75.33 C102.72,75.25 99.74,75.61 99.43,76.11 C99.12,76.62 98.44,76.77 97.93,76.46 C97.42,76.14 97.00,76.39 97.00,77.00 C97.00,77.61 96.56,77.85 96.02,77.51 C95.48,77.18 95.78,78.20 96.69,79.78 C97.60,81.37 98.06,83.41 97.70,84.33 C97.11,85.87 93.90,86.35 91.28,85.74 C91.89,85.79 92.57,85.74 93.34,85.58 C97.19,84.81 97.23,84.76 96.41,81.49 C95.41,77.51 87.89,70.00 84.92,70.02 C82.19,70.03 78.96,71.92 80.50,72.59 C85.25,74.68 86.51,75.80 86.58,78.03 C86.71,82.02 86.92,82.76 88.56,84.42 C88.55,84.41 88.54,84.39 88.52,84.38 C87.63,83.49 86.66,83.00 86.37,83.30 C86.07,83.59 84.97,82.97 83.92,81.92 C82.86,80.86 81.13,80.00 80.07,80.00 C78.71,80.00 78.04,79.19 77.82,77.30 C77.51,74.67 77.35,74.61 71.50,74.87 C68.20,75.02 65.14,75.50 64.69,75.93 C64.25,76.36 65.04,78.08 66.44,79.75 C67.85,81.42 69.00,83.31 69.00,83.95 C69.00,84.59 69.45,84.84 70.00,84.50 C70.55,84.16 71.00,84.64 71.00,85.56 C71.00,88.37 77.93,98.86 84.26,105.62 L 86.14 107.63 L 84.83 106.25 C81.81,103.09 78.04,98.47 76.45,96.00 C63.42,75.78 48.58,65.28 34.30,66.19 L 29.50 66.50 L 29.61 73.00 C29.77,82.80 35.08,93.69 41.93,100.90 C38.75,97.74 35.94,93.94 34.12,90.00 C33.23,88.07 31.97,86.16 31.33,85.74 C30.68,85.33 29.86,83.64 29.50,81.99 C29.14,80.35 28.48,79.00 28.04,79.00 C27.60,79.00 26.97,78.00 26.65,76.77 C25.88,73.83 23.75,75.77 23.75,79.41 C23.75,80.81 23.36,81.72 22.88,81.42 C21.71,80.70 21.78,81.59 23.36,87.50 C23.66,88.63 24.01,89.75 24.41,90.86 C20.38,80.37 19.91,69.03 24.36,60.30 C28.70,51.81 32.73,47.17 38.24,44.34 C42.74,42.03 45.15,41.55 55.00,41.05 C61.33,40.73 67.40,39.97 68.50,39.36 C71.27,37.83 79.23,36.83 80.77,37.83 C81.75,38.45 81.57,39.08 80.02,40.48 C76.89,43.31 77.56,45.46 83.21,50.68 C86.08,53.33 90.69,57.80 93.46,60.61 C96.23,63.41 99.92,66.44 101.66,67.33 C104.81,68.95 104.82,68.95 105.82,66.07 C106.69,63.58 106.49,62.87 104.35,60.86 C98.35,55.22 95.76,45.96 98.26,39.08 C99.91,34.53 101.33,34.26 102.77,38.24 C103.56,40.40 105.51,42.44 108.58,44.29 C111.13,45.82 113.43,47.93 113.70,48.96 C114.18,50.81 114.26,50.81 117.35,48.93 C119.08,47.87 122.13,47.01 124.12,47.00 C126.21,47.00 128.80,46.16 130.27,45.00 C133.58,42.40 135.00,42.47 134.99,45.25 C134.97,53.41 128.89,61.93 121.63,63.96 L 117.25 65.19 L 116.61 70.84 C116.22,74.25 115.57,77.43 114.60,80.57 ZM 81.00 77.00 C81.00,77.55 81.68,78.00 82.50,78.00 C83.32,78.00 84.00,77.55 84.00,77.00 C84.00,76.45 83.32,76.00 82.50,76.00 C81.68,76.00 81.00,76.45 81.00,77.00 ZM 102.47 102.65 C101.86,103.48 101.51,104.00 101.65,104.48 C101.51,104.00 101.85,103.48 102.46,102.65 C105.51,98.48 108.29,94.14 110.42,90.40 C108.38,94.19 105.77,98.17 102.47,102.65 ZM 60.35 107.82 C59.86,108.62 58.72,109.00 56.89,109.00 C58.48,109.00 59.69,108.53 60.35,107.82 ZM 58.79 101.94 C58.99,102.37 59.25,102.87 59.54,103.43 C59.73,103.80 59.89,104.14 60.03,104.46 C59.62,103.85 59.14,102.86 58.79,101.94 ZM 72.00 105.50 C68.86,103.34 65.70,101.42 63.41,100.24 C65.59,101.31 68.46,103.07 72.00,105.50 ZM 59.93 99.00 C59.53,99.01 59.19,99.04 58.93,99.10 C59.18,98.99 59.51,98.95 59.93,99.00 Z" fill="rgb(88,114,248)"/>
+  </g>
+</svg>
+      
+      <strong class="ct-prov-name">DeepSeek</strong>
+      <span class="ct-badge ct-badge-paid">Paid</span>
+    </div>
+    <div class="ct-prov-card">
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+<g>
+  <!-- I removed the background block and the white mask block -->
+  <path d="M 29.08 104.41 L 26.00 101.82 L 26.00 74.48 L 26.00 47.15 L 28.63 45.07 C30.95,43.25 32.65,43.00 42.70,43.00 C48.99,43.00 55.00,43.46 56.05,44.03 C58.66,45.43 68.00,57.89 68.00,59.97 C68.00,62.26 63.64,66.19 61.91,65.47 C61.13,65.15 58.47,61.99 56.00,58.45 C53.28,54.56 50.97,52.21 50.17,52.51 C49.44,52.78 45.72,53.00 41.92,53.00 L 35.00 53.00 L 35.00 75.00 L 35.00 97.00 L 43.37 97.00 L 51.74 97.00 L 61.31 84.75 C85.40,53.90 92.20,45.41 93.73,44.25 C95.69,42.76 116.56,42.50 120.28,43.92 C124.69,45.59 125.12,48.71 124.80,76.41 L 124.50 102.18 L 121.69 104.59 C119.09,106.83 118.09,107.00 107.67,107.00 C94.50,107.00 94.11,106.82 87.34,97.33 C82.85,91.03 82.70,90.62 84.10,88.12 C86.75,83.38 89.93,84.24 94.74,91.02 L 98.98 97.00 L 106.99 97.00 L 115.00 97.00 L 115.00 75.00 L 115.00 53.00 L 106.62 53.00 L 98.24 53.00 L 93.92 58.75 C91.55,61.91 86.87,67.88 83.53,72.00 C80.19,76.12 72.88,85.40 67.28,92.62 C61.69,99.84 56.37,106.03 55.47,106.37 C54.57,106.72 48.96,107.00 42.99,107.00 C32.79,107.00 31.97,106.85 29.08,104.41 Z" fill="#333"/>
+</g>
+</svg>
+
+      <strong class="ct-prov-name">AnythingLLM</strong>
+      <span class="ct-badge ct-badge-free">Free</span>
+    </div>
+  </div>
+
+  <!-- ── Supported Versions ── -->
+  <h2 class="ct-section-title">Supported nopCommerce Versions</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-versions">
+    <div class="ct-version-card"><strong class="ct-version-number">4.60</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number">4.70</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number">4.80</strong><span class="ct-badge ct-badge-supported">Supported</span></div>
+    <div class="ct-version-card"><strong class="ct-version-number latest">4.90</strong><span class="ct-badge ct-badge-latest">Latest</span></div>
+  </div>
+
+  <!-- ── Configuration ── -->
+  <h2 class="ct-section-title">Configuration</h2>
+  <div class="ct-section-divider"></div>
+  <p class="ct-config-text">After installing the plugin, navigate to <strong>Configuration → ChatGPTAI Extension</strong> in your nopCommerce admin panel. The configuration page lets you set up everything in one place — enable AI services, select your preferred AI provider, enter your API key, toggle content sections (Products, Blog, News, Topics, Meta Tags), and customize the default AI prompts for each content type.</p>
+  <p class="ct-config-text" style="margin-bottom:16px;">Once configured, the <strong>"Generate Using AI"</strong> button appears on the relevant editor pages throughout your admin panel. Simply click it, customize your query in the popup, and let AI generate professional, SEO-optimized content instantly.</p>
+  <div class="ct-img-block">
+    <img src="configure_chatgptaiextension.png" alt="ChatGPTAI Extension Configuration Page" loading="lazy" />
+  </div>
+
+  <!-- ── Customize Popup ── -->
+  <h2 class="ct-section-title">Customize AI Query Popup</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-popup">
+    <div class="ct-popup-img">
+      <img src="customize_window.png" alt="Customize AI Query Popup" loading="lazy" />
+    </div>
+    <div class="ct-popup-text">
+      <p style="margin-bottom:10px;">When you click <strong>"Generate Using AI"</strong>, a popup opens where you can customize:</p>
+      <div class="ct-popup-item">- Name (auto-filled, editable)</div>
+      <div class="ct-popup-item">- Target Language</div>
+      <div class="ct-popup-item">- Features &amp; Keywords</div>
+      <div class="ct-popup-item">- Word Limit</div>
+      <div class="ct-popup-item">- Tone of Voice</div>
+      <div class="ct-popup-item">- Custom Tone of Voice</div>
+      <div class="ct-popup-item">- Special Instructions</div>
+      <p class="ct-popup-note">All values combine with the configured prompt and are sent to the selected AI provider. Content is generated in the selected language.</p>
+    </div>
+  </div>
+
+  <!-- ── Works Across Your Store ── -->
+  <h2 class="ct-section-title">Works Across Your Store</h2>
+  <div class="ct-section-divider"></div>
+
+  <div class="ct-screen-row">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--red);">Product</span>
+      <h3 class="ct-screen-title">Products</h3>
+      <p class="ct-screen-desc">Generate high-quality, AI-powered product descriptions directly from the product edit page. With just one click, create SEO-optimized, engaging, and professional content for any product — saving time and improving your store's visibility.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_ProductDescription.JPG" alt="Product Description" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row-rev">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--blue);">Blog</span>
+      <h3 class="ct-screen-title">Blog Posts</h3>
+      <p class="ct-screen-desc">Create high-quality blog content instantly with one click from the blog post editor. AI generates well-structured, engaging, and SEO-friendly articles in your preferred tone and language.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Blogs.JPG" alt="Blog Post" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--orange);">News</span>
+      <h3 class="ct-screen-title">News Items</h3>
+      <p class="ct-screen-desc">Generate high-quality news content instantly from the news item editor. Create well-structured, professional articles perfect for announcements, updates, and store news.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_News.JPG" alt="News Item" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row-rev">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--green);">Topic</span>
+      <h3 class="ct-screen-title">Topic (Pages)</h3>
+      <p class="ct-screen-desc">Automatically generate SEO-friendly content for topic pages such as About Us, Shipping Policy, FAQ, and more. Create well-structured, informative, and professional pages in seconds.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Topic.JPG" alt="Topic Page" loading="lazy" /></div>
+  </div>
+  <div class="ct-hr"></div>
+
+  <div class="ct-screen-row" style="margin-bottom:28px;">
+    <div class="ct-screen-text">
+      <span class="ct-screen-tag" style="background:var(--navy);">SEO</span>
+      <h3 class="ct-screen-title">Meta Tag Generation</h3>
+      <p class="ct-screen-desc">Save time with intelligent SEO automation. The system instantly creates optimized Meta Title, Meta Keywords, and Meta Description when you click save, ensuring better search visibility.</p>
+    </div>
+    <div class="ct-screen-img"><img src="GenerateByAIButton_Seo.JPG" alt="Meta Tag Generation" loading="lazy" /></div>
+  </div>
+
+  <!-- ── Features ── -->
+  <h2 class="ct-section-title">Features</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-features">
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fff0f0;"><svg viewBox="0 0 24 24" fill="none" stroke="#fb6060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Five AI Providers</strong><span class="ct-feature-desc">Azure OpenAI, ChatGPT, Gemini, DeepSeek, AnythingLLM (Free)</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0f1ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#4753cb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Four Content Types</strong><span class="ct-feature-desc">Products, Blog Posts, News Items, and Topic Pages</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0faf4;"><svg viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="#27ae60" stroke="none"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">SEO &amp; Auto Meta Tags</strong><span class="ct-feature-desc">Meta Title, Meta Keywords, and Meta Description on save</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fff3e8;"><svg viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Customizable Popup</strong><span class="ct-feature-desc">Tone, language, keywords, word limit controls</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f8f0ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Custom Prompts</strong><span class="ct-feature-desc">Default AI prompts with full custom editing support</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#edfaf6;"><svg viewBox="0 0 24 24" fill="none" stroke="#1abc9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Multi-Locale</strong><span class="ct-feature-desc">Content generation per language locale</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#eef6fd;"><svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="#3498db" stroke="none"/><circle cx="16" cy="12" r="2" fill="#3498db" stroke="none"/><circle cx="10" cy="18" r="2" fill="#3498db" stroke="none"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Granular Controls</strong><span class="ct-feature-desc">Enable/disable each content type and meta field independently</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fffbee;"><svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Save or Copy</strong><span class="ct-feature-desc">Save content directly or copy generated HTML without overwriting</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#f0f1f5;"><svg viewBox="0 0 24 24" fill="none" stroke="#2c2c3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Secure API</strong><span class="ct-feature-desc">Secure API key configuration with selected provider</span></div></div>
+    <div class="ct-feature-card"><div class="ct-feature-icon" style="background:#fffbee;"><svg viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="ct-feature-body"><strong class="ct-feature-name">Scalable</strong><span class="ct-feature-desc">Works with hundreds or thousands of products</span></div></div>
+  </div>
+
+  <p style="margin-bottom:28px;">Get <strong>ChatGPTAIExtension Plugin</strong> to automate content creation for your nopCommerce online store. Check out Clanstech's <a href="https://clanstech.com" target="_blank" rel="noopener" class="ct-link">complete collection of nopCommerce plugins</a> for all your business needs.</p>
+
+  <!-- ══ OUR SERVICES ══ -->
+  <h2 class="ct-section-title">Our Services</h2>
+  <div class="ct-section-divider"></div>
+  <div class="ct-svc-grid" style="margin-bottom:32px;">
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="ct-svc-name">Custom Plugin Development</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">We develop custom nopCommerce plugins tailored to your business needs. From idea to deployment, we deliver secure, scalable, and production-ready solutions.</div>
+    </div>
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg></div>
+      <div class="ct-svc-name">Plugin Installation &amp; Configuration</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">Professional plugin installation, setup, and configuration for your live or staging store. We ensure smooth integration and proper optimization.</div>
+    </div>
+    <div class="ct-svc-card">
+      <div class="ct-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+      <div class="ct-svc-name">Maintenance &amp; Support</div>
+      <div class="ct-svc-rule"></div>
+      <div class="ct-svc-desc">Ongoing updates, bug fixes, and technical support to keep your store secure, stable, and performing at its best.</div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="ct-footer-wrap">
+    <div class="ct-footer-brand">
+      <div class="ct-brand-left">
+        <div class="ct-logo-box">
+          <img src="Logo_Clanstech.png" alt="Clanstech" class="ct-footer-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="ct-logo-text" style="display:none;">
+            <span class="ct-logo-text-main">Clanstech</span>
+            <span class="ct-logo-text-sub">Technology Solutions</span>
+          </div>
+        </div>
+      </div>
+      <div class="ct-brand-center">
+        <div class="ct-silver-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          Silver Solution Partner
+        </div>
+      </div>
+      <div class="ct-brand-right">
+        <div class="ct-logo-box">
+          <img src="silver.png" alt="nopCommerce Silver Partner" class="ct-partner-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="ct-nop-text" style="display:none;">
+            <span class="ct-nop-text-main">nopCommerce</span>
+            <span class="ct-nop-text-sub">Official Partner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ct-contact-band">
+      <h2 class="ct-contact-band-title">Contact Us</h2>
+      <div class="ct-contact-band-divider"></div>
+      <div class="ct-contact-cards">
+        <a href="mailto:info@clanstech.com" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Email Us</span>
+            <span class="ct-contact-value">info@clanstech.com</span>
+          </div>
+        </a>
+        <a href="tel:+918595099039" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Call Us</span>
+            <span class="ct-contact-value">+91 8595 099 039</span>
+          </div>
+        </a>
+        <a href="https://clanstech.com" target="_blank" rel="noopener" class="ct-contact-card">
+          <div class="ct-contact-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="ct-contact-info">
+            <span class="ct-contact-label">Visit Website</span>
+            <span class="ct-contact-value">clanstech.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="ct-footer-bottom">
+      <p class="ct-footer-copy">&copy; 2025 Clanstech Technology Solutions. All rights reserved.</p>
+      <a href="https://www.nopcommerce.com/en/clanstech" target="_blank" rel="noopener" class="ct-footer-partner-link">
+        View nopCommerce Partner Profile
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-li
